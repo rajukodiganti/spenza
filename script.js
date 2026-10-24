@@ -274,17 +274,19 @@ function setupAdminForm() {
         const descInput = document.getElementById('foodDesc');
         const priceInput = document.getElementById('foodPrice');
         const categoryInput = document.getElementById('foodCategory');
-        const imageInput = document.getElementById('foodImage');
+        const imageHidden = document.getElementById('foodImageBase64');
+        const imagePreview = document.getElementById('imagePreview');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
 
         const name = nameInput.value.trim();
         const description = descInput.value.trim();
         const price = parseFloat(priceInput.value);
         const category = categoryInput.value;
-        const image = imageInput.value.trim();
+        const image = imageHidden ? imageHidden.value : '';
 
         // Validation
         if (!name || !description || !category || !image || isNaN(price)) {
-            showAlert("Please fill out all required fields.", "error");
+            showAlert("Please fill out all required fields and upload a food image.", "error");
             return;
         }
 
@@ -304,12 +306,15 @@ function setupAdminForm() {
             image
         };
 
-        // Save
+        // Save locally
         addMenuItem(newItem);
 
         // Feedback & UI Update
         showAlert(`Dish "${name}" added successfully to the menu!`, "success");
         form.reset();
+        if (imageHidden) imageHidden.value = '';
+        if (imagePreview) imagePreview.style.display = 'none';
+        if (fileNameDisplay) fileNameDisplay.textContent = 'Click to upload dish photo';
         renderAdminTable();
     });
 
@@ -326,21 +331,39 @@ function setupAdminForm() {
 }
 
 /**
- * Quick preset helper chips for the Admin form image field
+ * Setup Image File Upload with Instant Local Base64 Conversion and Preview
  */
-function setupImagePresets() {
-    const chips = document.querySelectorAll('.image-chip');
-    const imageInput = document.getElementById('foodImage');
-    if (!chips.length || !imageInput) return;
+function setupImageUpload() {
+    const fileInput = document.getElementById('foodImageFile');
+    const imagePreview = document.getElementById('imagePreview');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const hiddenBase64 = document.getElementById('foodImageBase64');
 
-    chips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            const sampleUrl = chip.getAttribute('data-url');
-            if (sampleUrl) {
-                imageInput.value = sampleUrl;
-                imageInput.focus();
+    if (!fileInput) return;
+
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please upload a valid image file (PNG, JPG, JPEG, WEBP).');
+                fileInput.value = '';
+                return;
             }
-        });
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const base64Data = e.target.result;
+                if (hiddenBase64) hiddenBase64.value = base64Data;
+                if (imagePreview) {
+                    imagePreview.src = base64Data;
+                    imagePreview.style.display = 'block';
+                }
+                if (fileNameDisplay) {
+                    fileNameDisplay.textContent = `Selected: ${file.name}`;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
     });
 }
 
@@ -457,6 +480,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setupAdminAuth();
         checkAdminAuth();
         setupAdminForm();
-        setupImagePresets();
+        setupImageUpload();
     }
 });

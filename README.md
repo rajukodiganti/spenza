@@ -199,14 +199,14 @@ flowchart LR
   * **Username**: `spenza`
   * **Password**: `spenza123`
 * Once authenticated, session state is preserved in browser `sessionStorage`, and an elegant **Logout** option is provided in the top bar.
-* **Add Menu Items**: Food items added through the admin form are persisted into the browser's `localStorage` and dynamically appended to the menu items array.
-* Newly added items automatically reflect in both the Admin listing table and the main `menu.html` page under their designated category.
-* **Demonstration Notice**: This demonstration is built for a college DevOps curriculum. In a real-world enterprise production deployment, credentials and authentication would be validated by a backend service (e.g. JWT/OAuth/database) rather than frontend logic.
+* **Local Image Upload**: Food dish images are uploaded directly from the local device using the interactive upload field, processed via JavaScript `FileReader`, and saved as base64 in `localStorage`.
+* **Add Menu Items**: Newly added items automatically reflect in both the Admin listing table and the main down-scrolling `#menu` section under their designated category.
+* **Demonstration Notice**: This demonstration is built for a college DevOps curriculum. In a real-world enterprise production deployment, credentials and file storage would be handled by a backend service and object store rather than browser storage.
 
 ---
 
 ## 10. License & Credits
 
 * Developed for College DevOps Laboratory Demonstration.
-* High-resolution culinary imagery provided via [Unsplash](https://unsplash.com).
-* Typography: *Cinzel* & *Montserrat* via Google Fonts.
+* High-resolution restaurant interior photo provided by SPENZA Kitchen & Dining.
+* Typography: *Playfair Display* & *Plus Jakarta Sans* via Google Fonts.
