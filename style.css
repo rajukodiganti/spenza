@@ -425,38 +425,43 @@ h1, h2, h3, h4, .brand-logo {
     flex-wrap: wrap;
 }
 
-/* Rating Badge in Hero (Bottom Right) */
+/* Rating Badge in Hero (Matching Image 4 Reference) */
 .hero-rating-box {
     position: absolute;
-    bottom: 2.8rem;
+    bottom: 2.5rem;
     right: 6%;
-    text-align: right;
+    text-align: center;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .rating-number {
-    font-size: 3.2rem;
-    font-family: var(--font-heading);
-    color: var(--light-sand);
-    font-weight: 700;
+    font-size: 3.6rem;
+    font-family: var(--font-body), sans-serif;
+    color: #D4AF37;
+    font-weight: 800;
     line-height: 1;
     display: block;
+    letter-spacing: -0.5px;
 }
 
 .rating-stars {
-    color: var(--sand-gold);
-    font-size: 1.05rem;
-    letter-spacing: 3px;
+    color: #D4AF37;
+    font-size: 1.15rem;
+    letter-spacing: 5px;
     display: block;
-    margin: 0.2rem 0;
+    margin: 0.35rem 0 0.45rem;
 }
 
 .rating-text {
-    font-size: 0.72rem;
-    letter-spacing: 2.5px;
-    color: var(--sand-muted);
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    color: #B0BEC5;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
+    font-family: var(--font-body), sans-serif;
 }
 
 /* Animated Scroll Indicator (Anchored at the end of the first page) */
@@ -704,14 +709,15 @@ h1, h2, h3, h4, .brand-logo {
 
 .food-price {
     color: var(--light-sand);
-    font-size: 1.2rem;
+    font-size: 1.35rem;
     font-weight: 700;
     white-space: nowrap;
-    font-family: var(--font-heading);
-    background-color: rgba(127, 1, 31, 0.25);
-    padding: 0.15rem 0.6rem;
-    border-radius: 4px;
-    border: 1px solid rgba(127, 1, 31, 0.4);
+    font-family: 'Times New Roman', Times, serif;
+    background-color: rgba(127, 1, 31, 0.45);
+    padding: 0.18rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid rgba(127, 1, 31, 0.6);
+    letter-spacing: 0.5px;
 }
 
 .food-desc {
@@ -970,6 +976,84 @@ h1, h2, h3, h4, .brand-logo {
 .footer-links a:hover {
     color: var(--wine-red);
     padding-left: 5px;
+}
+
+/* Footer Social & Connect Icon Tiles (Matching Image 2 Reference) */
+.footer-icons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 46px);
+    gap: 0.75rem;
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.footer-icon-box {
+    width: 46px;
+    height: 46px;
+    background-color: #141414;
+    border: 1px solid rgba(245, 235, 208, 0.16);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #D4AF37;
+    fill: #D4AF37;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.footer-icon-box svg {
+    width: 20px;
+    height: 20px;
+    fill: #D4AF37;
+    transition: transform 0.2s ease, fill 0.2s ease;
+}
+
+.footer-icon-box:hover {
+    background-color: #1a1a1a;
+    border-color: var(--wine-red);
+    box-shadow: 0 0 14px rgba(127, 1, 31, 0.55);
+    transform: translateY(-2px);
+}
+
+.footer-icon-box:hover svg {
+    fill: var(--white);
+    transform: scale(1.1);
+}
+
+.footer-contact-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 0.8rem;
+}
+
+.footer-contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--light-sand);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+}
+
+.footer-contact-item svg {
+    width: 17px;
+    height: 17px;
+    fill: #D4AF37;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.footer-contact-item:hover {
+    color: var(--white);
+}
+
+.footer-contact-item:hover svg {
+    transform: scale(1.15);
+    fill: var(--white);
 }
 
 .footer-bottom-clean {
