@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | Royal Marigold</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-logo">
+                <span class="logo-main">ROYAL MARIGOLD</span>
+                <span class="logo-sub">FINE DINING &bull; EST. 2024</span>
+            </a>
+
+            <button class="mobile-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="reach-us.html">Reach Us</a></li>
+                    <li><a href="admin.html" class="admin-nav-link active">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="admin-section">
+            <div class="container">
+                <div class="section-title-wrap">
+                    <span class="section-subtitle">Kitchen Management</span>
+                    <h1 class="section-title">Admin Management Portal</h1>
+                    <p class="silver-text" style="max-width: 650px; margin: 0.8rem auto 0; font-size: 0.95rem;">
+                        Add new culinary creations directly to the royal menu. Items are saved locally and immediately available across the site.
+                    </p>
+                </div>
+
+                <!-- Demonstration Notice Banner -->
+                <div class="admin-demo-alert">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <div>
+                        <strong class="gold-text">Academic Demonstration Notice:</strong> 
+                        This admin portal is a frontend demonstration designed for a DevOps CI/CD pipeline showcase. 
+                        Data is persisted locally in browser <code>localStorage</code> without a backend database. 
+                        It is not secured with backend authentication and is not intended for public production deployment.
+                    </div>
+                </div>
+
+                <div class="admin-grid">
+                    <!-- Add Menu Item Form -->
+                    <div class="admin-card">
+                        <h2 class="admin-card-title">Add New Dish</h2>
+
+                        <!-- Alert Box for Success/Error -->
+                        <div id="form-alert" class="alert-message"></div>
+
+                        <form id="add-menu-form" novalidate>
+                            <div class="form-group">
+                                <label for="foodName">Food Item Name *</label>
+                                <input type="text" id="foodName" class="form-control" placeholder="e.g. Shahi Kesar Kebab" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="foodCategory">Category *</label>
+                                <select id="foodCategory" class="form-control" required>
+                                    <option value="" disabled selected>Select a Category</option>
+                                    <option value="Starters">Starters</option>
+                                    <option value="Main Course">Main Course</option>
+                                    <option value="Biryani">Biryani</option>
+                                    <option value="Desserts">Desserts</option>
+                                    <option value="Beverages">Beverages</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="foodPrice">Price in Indian Rupees (₹) *</label>
+                                <input type="number" id="foodPrice" class="form-control" placeholder="e.g. 450" min="1" step="any" required>
+                                <p class="helper-text">Must be a valid positive amount.</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="foodDesc">Short Description *</label>
+                                <textarea id="foodDesc" class="form-control" rows="3" placeholder="Describe the ingredients, preparation, and flavor profile..." required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="foodImage">Food Image URL *</label>
+                                <input type="url" id="foodImage" class="form-control" placeholder="https://images.unsplash.com/..." required>
+                                <p class="helper-text">Paste an image link or click a sample preset below:</p>
+                                <div class="quick-image-chips">
+                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80">Tikka Preset</span>
+                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=700&q=80">Biryani Preset</span>
+                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=700&q=80">Curry Preset</span>
+                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=700&q=80">Dessert Preset</span>
+                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=700&q=80">Drink Preset</span>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 2rem;">
+                                <button type="submit" class="btn btn-gold" style="width: 100%;">Add Menu Item</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Existing Menu Items List -->
+                    <div class="admin-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(192, 192, 192, 0.15); padding-bottom: 0.8rem;">
+                            <h2 style="color: var(--white); font-size: 1.4rem; margin: 0;">Existing Menu Items</h2>
+                            <span id="item-count-badge" class="table-badge" style="border-color: var(--marigold-gold); color: var(--marigold-gold);">
+                                0 Items
+                            </span>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Dish</th>
+                                        <th>Details</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-table-body">
+                                    <!-- Rendered dynamically by script.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="brand-logo" style="margin-bottom: 1rem;">
+                        <span class="logo-main">ROYAL MARIGOLD</span>
+                        <span class="logo-sub">FINE DINING</span>
+                    </div>
+                    <p>
+                        An exceptional culinary destination crafted to celebrate authentic flavours, 
+                        impeccable hospitality, and timeless ambience.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="menu.html">Full Menu</a></li>
+                        <li><a href="reach-us.html">Reach Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>DevOps Lab</h4>
+                    <ul class="footer-links">
+                        <li><a href="admin.html">Admin Portal</a></li>
+                        <li><span style="color: var(--silver);">Dockerized App</span></li>
+                        <li><span style="color: var(--silver);">CI/CD Jenkins</span></li>
+                        <li><span style="color: var(--silver);">Git Version Control</span></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Operating Hours</h4>
+                    <p style="margin-bottom: 0.5rem;"><strong class="gold-text">Lunch:</strong> 12:00 PM – 03:30 PM</p>
+                    <p style="margin-bottom: 0.5rem;"><strong class="gold-text">Dinner:</strong> 07:00 PM – 11:30 PM</p>
+                    <p><span class="silver-text">Open every Tuesday through Sunday</span></p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Royal Marigold Restaurant. All Rights Reserved.</p>
+                <p class="silver-text">College DevOps Project &bull; Nginx &bull; Docker &bull; Jenkins</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
