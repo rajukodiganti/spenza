@@ -556,16 +556,17 @@ function setupScrollEffects() {
 
 /**
  * Secret 4-Tap Admin Trigger
- * Tapping 4 times in quick succession on the SPENZA brand logo opens the admin panel (admin.html).
+ * Tapping 4 times in quick succession on the SPENZA text near copyright
+ * (or on the brand logo) opens the admin panel (admin.html).
  */
 function setupSecretAdminTrigger() {
+    const copyrightTrigger = document.getElementById('footer-copyright-trigger') || document.getElementById('copyright-spenza');
     const brandLogo = document.querySelector('.brand-logo');
-    if (!brandLogo) return;
 
     let tapCount = 0;
     let tapTimeout = null;
 
-    brandLogo.addEventListener('click', (e) => {
+    function registerTap(e) {
         tapCount++;
 
         if (tapTimeout) {
@@ -580,11 +581,17 @@ function setupSecretAdminTrigger() {
             return;
         }
 
-        // Reset if inactivity exceeds 1.4 seconds
         tapTimeout = setTimeout(() => {
             tapCount = 0;
-        }, 1400);
-    });
+        }, 1500);
+    }
+
+    if (copyrightTrigger) {
+        copyrightTrigger.addEventListener('click', registerTap);
+    }
+    if (brandLogo) {
+        brandLogo.addEventListener('click', registerTap);
+    }
 }
 
 /**

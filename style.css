@@ -984,6 +984,31 @@ h1, h2, h3, h4, .brand-logo {
     gap: 1rem;
 }
 
+.footer-copyright-line {
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+}
+
+.secret-admin-trigger {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--light-sand);
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    display: inline-block;
+}
+
+.secret-admin-trigger:hover {
+    color: var(--white);
+    text-shadow: 0 0 8px rgba(245, 235, 208, 0.4);
+}
+
+.secret-admin-trigger:active {
+    color: var(--wine-red);
+}
+
 .footer-bottom-clean a {
     color: var(--sand-muted);
     text-decoration: underline;
