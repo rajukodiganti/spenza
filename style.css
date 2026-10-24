@@ -1,22 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap');
-
 :root {
     --primary-black: #101010;
     --secondary-black: #161616;
     --card-black: #1A1A1A;
-    --wine-red: #7F011F;
-    --deep-wine: #5A0015;
+    --wine-red: #EAAE00;
+    --deep-wine: #C98B00;
     --light-sand: #F5EBD0;
     --sand-gold: #E8D5B0;
     --sand-muted: #D1C5A8;
     --silver: #C0C0C0;
     --white: #FFFFFF;
     --marigold-gold: #EAAE00;
-    --font-heading: 'Cinzel', 'Playfair Display', Georgia, serif;
-    --font-body: 'Playfair Display', 'Cinzel', Georgia, serif;
+    --deep-marigold: #C98B00;
+    --font-heading: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
     --border-subtle: 1px solid rgba(245, 235, 208, 0.15);
-    --wine-glow: 0 4px 25px rgba(127, 1, 31, 0.45);
+    --wine-glow: 0 4px 25px rgba(234, 174, 0, 0.45);
     --sand-glow: 0 4px 20px rgba(245, 235, 208, 0.25);
 }
 
@@ -158,7 +157,7 @@ h1, h2, h3, h4, .brand-logo {
     border-radius: 50%;
     object-fit: cover;
     border: 1.5px solid var(--wine-red);
-    box-shadow: 0 0 14px rgba(127, 1, 31, 0.5);
+    box-shadow: 0 0 14px rgba(234, 174, 0, 0.5);
     transition: var(--transition);
 }
 
@@ -227,7 +226,7 @@ h1, h2, h3, h4, .brand-logo {
     width: 0;
     height: 3px;
     background-color: var(--wine-red);
-    box-shadow: 0 0 10px rgba(127, 1, 31, 0.7);
+    box-shadow: 0 0 10px rgba(234, 174, 0, 0.75);
     border-radius: 2px;
     transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -320,22 +319,24 @@ h1, h2, h3, h4, .brand-logo {
 
 .btn-dark-outline:hover {
     border-color: var(--wine-red);
-    background-color: rgba(127, 1, 31, 0.35);
+    background-color: rgba(234, 174, 0, 0.2);
     color: var(--white);
     transform: translateY(-2px);
 }
 
 .btn-wine {
-    background-color: var(--wine-red);
-    color: var(--light-sand);
-    border: 1px solid var(--wine-red);
-    box-shadow: 0 4px 15px rgba(127, 1, 31, 0.4);
+    background: linear-gradient(135deg, #EAAE00 0%, #C98B00 100%);
+    color: #101010;
+    font-weight: 700;
+    border: 1px solid #EAAE00;
+    box-shadow: 0 4px 18px rgba(234, 174, 0, 0.35);
 }
 
 .btn-wine:hover {
-    background-color: var(--deep-wine);
-    color: var(--white);
-    box-shadow: var(--wine-glow);
+    background: linear-gradient(135deg, #FFD043 0%, #EAAE00 100%);
+    color: #101010;
+    border-color: #FFD043;
+    box-shadow: 0 6px 25px rgba(234, 174, 0, 0.6);
     transform: translateY(-2px);
 }
 
@@ -348,8 +349,8 @@ h1, h2, h3, h4, .brand-logo {
 
 .btn-outline-sand:hover {
     border-color: var(--wine-red);
-    color: var(--white);
-    background-color: rgba(127, 1, 31, 0.35);
+    color: #101010;
+    background-color: #EAAE00;
     transform: translateY(-2px);
 }
 
@@ -470,7 +471,7 @@ h1, h2, h3, h4, .brand-logo {
 /* Animated Scroll Indicator (Anchored at the end of the first page) */
 .hero-scroll-tag {
     position: absolute;
-    bottom: 2rem;
+    bottom: 4.8rem;
     left: 50%;
     transform: translateX(-50%);
     font-size: 0.76rem;
@@ -617,23 +618,36 @@ h1, h2, h3, h4, .brand-logo {
 .category-btn:hover {
     border-color: var(--wine-red);
     color: var(--white);
-    background-color: rgba(127, 1, 31, 0.2);
+    background-color: rgba(234, 174, 0, 0.15);
     transform: translateY(-2px);
 }
 
 .category-btn.active {
-    background-color: var(--wine-red);
-    color: var(--light-sand);
-    border-color: var(--wine-red);
-    box-shadow: var(--wine-glow);
+    background: linear-gradient(135deg, #EAAE00 0%, #C98B00 100%);
+    color: #101010;
+    border-color: #EAAE00;
+    box-shadow: 0 4px 18px rgba(234, 174, 0, 0.4);
     font-weight: 700;
 }
 
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2.2rem;
     margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.menu-grid.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.menu-grid.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.menu-grid.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .menu-card {
@@ -676,9 +690,9 @@ h1, h2, h3, h4, .brand-logo {
     position: absolute;
     top: 12px;
     right: 12px;
-    background-color: rgba(127, 1, 31, 0.9);
-    color: var(--light-sand);
-    border: 1px solid var(--wine-red);
+    background-color: rgba(234, 174, 0, 0.95);
+    color: #101010;
+    border: 1px solid #EAAE00;
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
     font-weight: 700;
@@ -711,15 +725,15 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .food-price {
-    color: var(--light-sand);
+    color: #EAAE00;
     font-size: 1.35rem;
     font-weight: 700;
     white-space: nowrap;
     font-family: 'Times New Roman', Times, serif;
-    background-color: rgba(127, 1, 31, 0.45);
+    background-color: rgba(234, 174, 0, 0.15);
     padding: 0.18rem 0.75rem;
     border-radius: 6px;
-    border: 1px solid rgba(127, 1, 31, 0.6);
+    border: 1px solid rgba(234, 174, 0, 0.5);
     letter-spacing: 0.5px;
 }
 
@@ -1134,7 +1148,7 @@ h1, h2, h3, h4, .brand-logo {
 .footer-icon-box:hover {
     background-color: #1a1a1a;
     border-color: var(--wine-red);
-    box-shadow: 0 0 14px rgba(127, 1, 31, 0.55);
+    box-shadow: 0 0 14px rgba(234, 174, 0, 0.55);
     transform: translateY(-2px);
 }
 
@@ -1264,7 +1278,7 @@ h1, h2, h3, h4, .brand-logo {
     height: 105px;
     border-radius: 50%;
     border: 2px solid var(--wine-red);
-    box-shadow: 0 0 25px rgba(127, 1, 31, 0.65), 0 0 10px rgba(234, 174, 0, 0.3);
+    box-shadow: 0 0 25px rgba(234, 174, 0, 0.65), 0 0 10px rgba(234, 174, 0, 0.3);
     object-fit: cover;
     display: block;
     margin: 0 auto;
@@ -1340,7 +1354,7 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .admin-user-badge {
-    background-color: rgba(127, 1, 31, 0.35);
+    background-color: rgba(234, 174, 0, 0.2);
     color: var(--light-sand);
     border: 1px solid var(--wine-red);
     padding: 0.2rem 0.6rem;
@@ -1527,22 +1541,46 @@ h1, h2, h3, h4, .brand-logo {
     box-shadow: 0 0 12px rgba(234, 174, 0, 0.35);
 }
 
+.admin-cat-tab-add {
+    background-color: transparent;
+    color: #EAAE00;
+    border: 1px dashed rgba(234, 174, 0, 0.6);
+    padding: 0.55rem 1.15rem;
+    border-radius: 5px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.admin-cat-tab-add:hover {
+    background-color: #EAAE00;
+    color: #101010;
+    border-style: solid;
+    box-shadow: 0 0 12px rgba(234, 174, 0, 0.4);
+}
+
 /* Admin Food Grid & Cards (Image 2) */
 .admin-food-grid {
     display: grid;
     gap: 1.8rem;
+    transition: all 0.3s ease;
 }
 
 .admin-food-grid.grid-3 {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .admin-food-grid.grid-2 {
-    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .admin-food-grid.grid-4 {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .admin-food-card {
@@ -1654,7 +1692,7 @@ h1, h2, h3, h4, .brand-logo {
     font-weight: 600;
     text-transform: uppercase;
     color: var(--light-sand);
-    background-color: rgba(127, 1, 31, 0.35);
+    background-color: rgba(234, 174, 0, 0.2);
     border: 1px solid var(--wine-red);
     padding: 0.15rem 0.55rem;
     border-radius: 3px;
@@ -1849,7 +1887,7 @@ h1, h2, h3, h4, .brand-logo {
 .form-control:focus {
     outline: none;
     border-color: var(--wine-red);
-    box-shadow: 0 0 8px rgba(127, 1, 31, 0.5);
+    box-shadow: 0 0 8px rgba(234, 174, 0, 0.5);
 }
 
 textarea.form-control {
@@ -1887,7 +1925,7 @@ select.form-control option {
 
 .file-upload-box:hover {
     border-color: var(--wine-red);
-    background-color: rgba(127, 1, 31, 0.08);
+    background-color: rgba(234, 174, 0, 0.08);
 }
 
 .file-input-hidden {

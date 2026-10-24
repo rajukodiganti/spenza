@@ -130,6 +130,144 @@ const DEFAULT_MENU_ITEMS = [
 // Fallback image URL when an external image cannot be loaded
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80";
 
+const CATEGORIES_KEY = 'SPENZA_CUSTOM_CATEGORIES';
+const DEFAULT_CATEGORIES = ['Starters', 'Main Course', 'Biryani', 'Desserts', 'Beverages'];
+const LAYOUT_KEY = 'SPENZA_MENU_LAYOUT';
+
+let currentCustomerCategory = 'All';
+
+/**
+ * Retrieve categories from localStorage or initialize with default categories
+ */
+function getCategories() {
+    try {
+        const stored = localStorage.getItem(CATEGORIES_KEY);
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                const set = new Set([...DEFAULT_CATEGORIES, ...parsed]);
+                return Array.from(set);
+            }
+        }
+    } catch(e) {}
+    return [...DEFAULT_CATEGORIES];
+}
+
+/**
+ * Save categories array to localStorage
+ */
+function saveCategories(cats) {
+    try {
+        localStorage.setItem(CATEGORIES_KEY, JSON.stringify(cats));
+    } catch(e) {}
+}
+
+/**
+ * Add a new category
+ */
+function addCategory(name) {
+    const clean = (name || '').trim();
+    if (!clean) return null;
+    const cats = getCategories();
+    const existing = cats.find(c => c.toLowerCase() === clean.toLowerCase());
+    if (existing) {
+        renderAllCategoryUI(existing);
+        return existing;
+    }
+    cats.push(clean);
+    saveCategories(cats);
+    renderAllCategoryUI(clean);
+    return clean;
+}
+
+/**
+ * Apply layout (grid-2, grid-3, grid-4) synchronously across both Admin Panel and Live Website
+ */
+function applyGlobalMenuLayout(layout) {
+    const validLayout = ['grid-2', 'grid-3', 'grid-4'].includes(layout) ? layout : 'grid-3';
+
+    // Main website menu grid
+    const mainGrid = document.getElementById('menu-grid');
+    if (mainGrid) {
+        mainGrid.classList.remove('grid-2', 'grid-3', 'grid-4');
+        mainGrid.classList.add(validLayout);
+    }
+
+    // Admin food grid
+    const adminGrid = document.getElementById('admin-food-grid');
+    if (adminGrid) {
+        adminGrid.classList.remove('grid-2', 'grid-3', 'grid-4');
+        adminGrid.classList.add(validLayout);
+    }
+
+    // Admin layout select dropdown
+    const layoutSelect = document.getElementById('adminLayoutSelect');
+    if (layoutSelect) {
+        layoutSelect.value = validLayout;
+    }
+}
+
+/**
+ * Render Category Tabs and Dropdown dynamically across the site
+ */
+function renderAllCategoryUI(selectedCategory) {
+    const categories = getCategories();
+
+    // 1. Modal Category Select (#foodCategory)
+    const catSelect = document.getElementById('foodCategory');
+    if (catSelect) {
+        const currentVal = selectedCategory !== undefined ? selectedCategory : catSelect.value;
+        catSelect.innerHTML = `
+            <option value="" disabled ${!currentVal ? 'selected' : ''}>Select a Category</option>
+            ${categories.map(c => `<option value="${escapeHtml(c)}" ${currentVal === c ? 'selected' : ''}>${escapeHtml(c)}</option>`).join('')}
+            <option value="__NEW_CATEGORY__">+ Add New Category...</option>
+        `;
+    }
+
+    // 2. Admin Category Tabs (#adminCategoryTabs)
+    const adminTabsContainer = document.getElementById('adminCategoryTabs');
+    if (adminTabsContainer) {
+        adminTabsContainer.innerHTML = `
+            <button type="button" class="admin-cat-tab ${currentAdminCategory === 'All' ? 'active' : ''}" data-category="All">ALL ITEMS</button>
+            ${categories.map(c => `
+                <button type="button" class="admin-cat-tab ${currentAdminCategory === c ? 'active' : ''}" data-category="${escapeHtml(c)}">${escapeHtml(c.toUpperCase())}</button>
+            `).join('')}
+            <button type="button" class="admin-cat-tab-add" id="adminAddCategoryTabBtn" title="Create a new category for menu">+ NEW CATEGORY</button>
+        `;
+        // Re-attach admin category click listeners
+        adminTabsContainer.querySelectorAll('.admin-cat-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                adminTabsContainer.querySelectorAll('.admin-cat-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const cat = tab.getAttribute('data-category');
+                renderAdminFoodGrid(cat, currentAdminSearch);
+            });
+        });
+        const addCatTabBtn = document.getElementById('adminAddCategoryTabBtn');
+        if (addCatTabBtn) {
+            addCatTabBtn.addEventListener('click', () => {
+                const newCat = prompt('Enter new menu category name (e.g. Tandoori Specials, Mocktails):');
+                if (newCat && newCat.trim()) {
+                    const added = addCategory(newCat.trim());
+                    showGlobalAdminAlert(`Category "${added}" added successfully!`, 'success');
+                }
+            });
+        }
+    }
+
+    // 3. Customer Website Category Tabs (.category-tabs)
+    const customerTabs = document.querySelector('.category-tabs');
+    if (customerTabs) {
+        customerTabs.innerHTML = `
+            <button class="category-btn ${currentCustomerCategory === 'All' ? 'active' : ''}" data-category="All">All Items</button>
+            ${categories.map(c => `
+                <button class="category-btn ${currentCustomerCategory === c ? 'active' : ''}" data-category="${escapeHtml(c)}">${escapeHtml(c)}</button>
+            `).join('')}
+        `;
+        setupCategoryFilters();
+    }
+}
+
 /**
  * Retrieve menu items from localStorage or initialize with default items
  */
@@ -174,10 +312,11 @@ function addMenuItem(item) {
 /**
  * Render Menu Cards on menu.html and index.html
  */
-function renderMenu(categoryFilter = 'All') {
+function renderMenu(categoryFilter = currentCustomerCategory) {
     const container = document.getElementById('menu-grid');
     if (!container) return;
 
+    currentCustomerCategory = categoryFilter;
     const items = getMenuItems();
     const filteredItems = categoryFilter === 'All' 
         ? items 
@@ -185,8 +324,9 @@ function renderMenu(categoryFilter = 'All') {
 
     if (filteredItems.length === 0) {
         container.innerHTML = `
-            <div class="empty-menu-msg">
-                <p>No dishes found under the <strong>${categoryFilter}</strong> category.</p>
+            <div class="empty-menu-msg" style="grid-column: 1/-1; text-align: center; color: var(--sand-muted); padding: 3.5rem 1rem;">
+                <p style="font-size: 1.25rem; color: var(--light-sand); margin-bottom: 0.5rem;">No dishes found under <strong>${escapeHtml(categoryFilter)}</strong></p>
+                <p style="font-size: 0.9rem;">Please choose another culinary category above.</p>
             </div>
         `;
         return;
@@ -367,9 +507,15 @@ function openEditDishModal(id) {
     if (nameInput) nameInput.value = dish.name;
     if (descInput) descInput.value = dish.description;
     if (priceInput) priceInput.value = dish.price;
-    if (categoryInput) categoryInput.value = dish.category;
+    if (categoryInput) {
+        renderAllCategoryUI(dish.category);
+        categoryInput.value = dish.category;
+    }
     if (tagInput) tagInput.value = dish.tag || 'NONE';
     if (imageHidden) imageHidden.value = dish.image;
+
+    const inputWrap = document.getElementById('newCategoryInputWrap');
+    if (inputWrap) inputWrap.style.display = 'none';
 
     if (imagePreview) {
         imagePreview.src = dish.image;
@@ -435,16 +581,14 @@ function setupAdminManagerUI() {
         });
     });
 
-    // Layout Dropdown
+    // Layout Dropdown (Synchronized with Live Website)
     const layoutSelect = document.getElementById('adminLayoutSelect');
-    const foodGrid = document.getElementById('admin-food-grid');
-    if (layoutSelect && foodGrid) {
+    if (layoutSelect) {
         layoutSelect.addEventListener('change', () => {
-            foodGrid.classList.remove('grid-2', 'grid-3', 'grid-4');
             const val = layoutSelect.value;
-            if (val === 'grid-2') foodGrid.classList.add('grid-2');
-            else if (val === 'grid-4') foodGrid.classList.add('grid-4');
-            else foodGrid.classList.add('grid-3');
+            localStorage.setItem(LAYOUT_KEY, val);
+            applyGlobalMenuLayout(val);
+            showGlobalAdminAlert(`Menu layout set to ${val.replace('grid-', '')} columns (applied to admin & live site)!`, 'success');
         });
     }
 
@@ -465,6 +609,7 @@ function setupAdminManagerUI() {
             const imageHidden = document.getElementById('foodImageBase64');
             const imagePreview = document.getElementById('imagePreview');
             const fileNameDisplay = document.getElementById('fileNameDisplay');
+            const inputWrap = document.getElementById('newCategoryInputWrap');
 
             if (editDishIdInput) editDishIdInput.value = '';
             if (modalTitle) modalTitle.textContent = '+ Add New Food Item';
@@ -472,6 +617,8 @@ function setupAdminManagerUI() {
             if (submitBtn) submitBtn.textContent = 'Add Menu Item';
 
             if (form) form.reset();
+            renderAllCategoryUI('');
+            if (inputWrap) inputWrap.style.display = 'none';
             if (imageHidden) imageHidden.value = '';
             if (imagePreview) imagePreview.style.display = 'none';
             if (fileNameDisplay) fileNameDisplay.textContent = 'Click to upload dish photo';
@@ -492,6 +639,77 @@ function setupAdminManagerUI() {
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
+        });
+    }
+}
+
+/**
+ * Setup category creation handlers inside the Add/Edit dish modal
+ */
+function setupCategoryAddHandlers() {
+    const catSelect = document.getElementById('foodCategory');
+    const toggleBtn = document.getElementById('toggleAddCustomCatBtn');
+    const inputWrap = document.getElementById('newCategoryInputWrap');
+    const inputField = document.getElementById('newCategoryInput');
+    const saveBtn = document.getElementById('saveNewCategoryBtn');
+    const cancelBtn = document.getElementById('cancelNewCategoryBtn');
+
+    if (!catSelect || !inputWrap) return;
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = inputWrap.style.display === 'none' || !inputWrap.style.display;
+            inputWrap.style.display = isHidden ? 'block' : 'none';
+            if (isHidden && inputField) {
+                inputField.focus();
+            }
+        });
+    }
+
+    catSelect.addEventListener('change', () => {
+        if (catSelect.value === '__NEW_CATEGORY__') {
+            inputWrap.style.display = 'block';
+            if (inputField) {
+                inputField.value = '';
+                inputField.focus();
+            }
+        } else {
+            inputWrap.style.display = 'none';
+        }
+    });
+
+    const handleSave = () => {
+        if (!inputField) return;
+        const val = inputField.value.trim();
+        if (!val) {
+            alert('Please enter a category name.');
+            inputField.focus();
+            return;
+        }
+        const added = addCategory(val);
+        inputWrap.style.display = 'none';
+        inputField.value = '';
+        renderAllCategoryUI(added);
+        if (catSelect) catSelect.value = added;
+    };
+
+    if (saveBtn) saveBtn.addEventListener('click', handleSave);
+    if (inputField) {
+        inputField.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSave();
+            }
+        });
+    }
+
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+            inputWrap.style.display = 'none';
+            if (inputField) inputField.value = '';
+            if (catSelect.value === '__NEW_CATEGORY__') {
+                catSelect.value = '';
+            }
         });
     }
 }
@@ -953,6 +1171,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setupPrivacyModal();
     setupSecretAdminTrigger();
 
+    // Initialize layout and categories from localStorage
+    const savedLayout = localStorage.getItem(LAYOUT_KEY) || 'grid-3';
+    applyGlobalMenuLayout(savedLayout);
+    renderAllCategoryUI();
+
     // Check which page we are on and initialize accordingly
     if (document.getElementById('menu-grid')) {
         renderMenu('All');
@@ -964,7 +1187,22 @@ document.addEventListener('DOMContentLoaded', () => {
         setupAdminAuth();
         checkAdminAuth();
         setupAdminManagerUI();
+        setupCategoryAddHandlers();
         setupAdminForm();
         setupImageUpload();
     }
+
+    // Sync across open tabs in real-time
+    window.addEventListener('storage', (e) => {
+        if (e.key === LAYOUT_KEY) {
+            applyGlobalMenuLayout(e.newValue);
+        }
+        if (e.key === CATEGORIES_KEY) {
+            renderAllCategoryUI();
+        }
+        if (e.key === STORAGE_KEY) {
+            if (document.getElementById('menu-grid')) renderMenu();
+            if (document.getElementById('admin-food-grid')) renderAdminFoodGrid();
+        }
+    });
 });
