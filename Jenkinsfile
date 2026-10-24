@@ -28,6 +28,7 @@ pipeline {
                         'admin.html',
                         'style.css',
                         'script.js',
+                        'logo.png',
                         'Dockerfile'
                     ]
 

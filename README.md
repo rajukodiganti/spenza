@@ -1,18 +1,20 @@
-# Royal Marigold — Fine Dining Restaurant Website & DevOps Pipeline
+# SPENZA Kitchen & Dining — Restaurant Website & DevOps Pipeline
 
-A simple, elegant, and premium-looking restaurant website built with a luxury **Black, Silver, and Marigold Gold** colour palette. This project is configured as an end-to-end beginner-friendly college DevOps demonstration utilizing **Git, GitHub, Docker, and Jenkins CI/CD**.
+A simple, elegant, and premium-looking restaurant website for **SPENZA Kitchen & Dining** (*"Crafted for the Finest Tastes."*), built with a luxury **Black, Silver, and Marigold Gold** colour palette. This project is configured as an end-to-end beginner-friendly college DevOps demonstration utilizing **Git, GitHub, Docker, and Jenkins CI/CD**.
 
 ---
 
 ## 1. Project Overview & Features
 
+* **Brand Identity**: **SPENZA Kitchen & Dining** with official emblem logo, tagline *"Crafted for the Finest Tastes."*, and direct reservation line (`+91 832 859 4373`).
+* **Operating Hours**: Open all week (Monday &ndash; Sunday) from **12:00 PM to 12:00 AM**.
 * **Multi-Page Fine Dining Website**: Includes **Home**, **About Us**, **Menu Categories**, **Reach Us**, and an **Admin Portal**.
-* **Premium Royal Palette**: Black (`#101010`), Charcoal (`#1A1A1A`), Silver (`#C0C0C0`), and Marigold Gold (`#EAAE00`).
+* **Protected Admin Portal**: Dedicated login requiring credentials (`spenza` / `spenza123`) to add dishes with client-side validation and persistence in browser `localStorage`.
+* **Premium Palette**: Black (`#101010`), Charcoal (`#1A1A1A`), Silver (`#C0C0C0`), and Marigold Gold (`#EAAE00`).
 * **Dynamic Menu Filtering**: Instant category filtering between *All*, *Starters*, *Main Course*, *Biryani*, *Desserts*, and *Beverages*.
-* **Admin Management Panel**: Allows kitchen managers to add new dishes with client-side validation (positive price check, required fields) and instant persistence across page refreshes via browser `localStorage`.
-* **Lightweight & High-Performance**: Built purely with semantic HTML5, modern responsive CSS3, and vanilla JavaScript without heavy external libraries or databases.
+* **Lightweight & High-Performance**: Built purely with semantic HTML5, modern responsive CSS3, and vanilla JavaScript without heavy external frameworks.
 * **Production-Grade Containerization**: Encapsulated in an official `nginx:alpine` Docker container.
-* **Automated CI/CD Pipeline**: Declarative Jenkins pipeline automating source code checkout, file validation, Docker image compilation, and automated container deployment.
+* **Automated CI/CD Pipeline**: Declarative Jenkins pipeline automating source code checkout, file validation (including logo and pages), Docker image compilation, and automated container deployment.
 
 ---
 
@@ -44,13 +46,14 @@ A simple, elegant, and premium-looking restaurant website built with a luxury **
 
 ```text
 restaurant-website/
-├── index.html        # Home page (Hero, logo, introduction, culinary highlights)
+├── index.html        # Home page (Hero, logo, tagline, culinary highlights)
 ├── about.html        # About Us page (History, dining philosophy, atmosphere)
 ├── menu.html         # Interactive menu with dynamic category filters
-├── reach-us.html     # Contact details, business hours, and Google Maps embed
-├── admin.html        # Frontend demonstration admin panel to add new dishes
+├── reach-us.html     # Contact details, +91 832 859 4373, hours, and Google Maps embed
+├── admin.html        # Protected admin portal (login spenza/spenza123 + add dish form)
+├── logo.png          # Official circular SPENZA emblem logo
 ├── style.css         # Unified stylesheet with luxury Black & Marigold theme
-├── script.js         # Navigation, localStorage state, menu filtering, and admin logic
+├── script.js         # Navigation, auth, localStorage state, and menu filtering
 ├── Dockerfile        # Docker build recipe using nginx:alpine
 ├── Jenkinsfile       # Declarative 4-stage CI/CD pipeline
 ├── .gitignore        # Git ignore exclusions
