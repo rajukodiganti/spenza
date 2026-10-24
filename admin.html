@@ -11,10 +11,10 @@
 </head>
 <body>
 
-    <!-- Navigation Bar -->
+    <!-- Sticky Navigation Bar -->
     <header class="site-header">
         <div class="container nav-container">
-            <a href="index.html" class="brand-logo">
+            <a href="index.html#home" class="brand-logo">
                 <img src="logo.png" alt="SPENZA Kitchen &amp; Dining Logo" class="brand-logo-img">
                 <div class="logo-text-wrap">
                     <span class="logo-main">SPENZA</span>
@@ -30,10 +30,10 @@
 
             <nav>
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="menu.html">Menu</a></li>
-                    <li><a href="reach-us.html">Reach Us</a></li>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#menu">Menu</a></li>
+                    <li><a href="index.html#reach-us">Reach Us</a></li>
                     <li><a href="admin.html" class="admin-nav-link active">Admin</a></li>
                 </ul>
             </nav>
@@ -48,7 +48,7 @@
                     <span class="section-subtitle">Crafted for the Finest Tastes</span>
                     <h1 class="section-title">SPENZA Admin Portal</h1>
                     <p class="silver-text" style="max-width: 650px; margin: 0.8rem auto 0; font-size: 0.95rem;">
-                        Add new culinary creations directly to the SPENZA menu. Items are saved locally and immediately available across the site.
+                        Add new culinary creations directly to the SPENZA menu. Items are saved locally and immediately available across the down-scrolling site.
                     </p>
                 </div>
 
@@ -56,7 +56,7 @@
                 <div id="admin-login-view" class="admin-login-wrapper">
                     <div class="admin-login-card">
                         <div style="margin-bottom: 1.2rem;">
-                            <img src="logo.png" alt="SPENZA Kitchen &amp; Dining Logo" class="brand-logo-img-large" style="border-radius: 50%; border: 2px solid var(--marigold-gold); box-shadow: var(--gold-glow);">
+                            <img src="logo.png" alt="SPENZA Kitchen &amp; Dining Logo" class="brand-logo-img-large" style="border-radius: 50%; border: 2px solid var(--wine-red); box-shadow: var(--wine-glow);">
                         </div>
                         <h2>Admin Authentication</h2>
                         <p>Please enter your credentials to access the kitchen management portal.</p>
@@ -76,7 +76,7 @@
                             </div>
 
                             <div style="margin-top: 1.5rem;">
-                                <button type="submit" class="btn btn-gold" style="width: 100%;">Login to Admin</button>
+                                <button type="submit" class="btn btn-wine" style="width: 100%;">Login to Admin</button>
                             </div>
                         </form>
                     </div>
@@ -90,7 +90,7 @@
                             <span>Logged in as:</span>
                             <span class="admin-user-badge">spenza</span>
                         </div>
-                        <button type="button" id="admin-logout-btn" class="btn btn-outline-silver" style="padding: 0.45rem 1.2rem; font-size: 0.85rem;">
+                        <button type="button" id="admin-logout-btn" class="btn btn-outline-sand" style="padding: 0.45rem 1.2rem; font-size: 0.85rem;">
                             Logout
                         </button>
                     </div>
@@ -101,7 +101,7 @@
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
                         </svg>
                         <div>
-                            <strong class="gold-text">Academic Demonstration Notice:</strong> 
+                            <strong class="sand-text">Academic Demonstration Notice:</strong> 
                             This admin portal is a frontend demonstration designed for a DevOps CI/CD pipeline showcase. 
                             Data is persisted locally in browser <code>localStorage</code> without a backend database. 
                             It is not secured with backend authentication and is not intended for public production deployment.
@@ -159,16 +159,16 @@
                                 </div>
 
                                 <div style="margin-top: 2rem;">
-                                    <button type="submit" class="btn btn-gold" style="width: 100%;">Add Menu Item</button>
+                                    <button type="submit" class="btn btn-wine" style="width: 100%;">Add Menu Item</button>
                                 </div>
                             </form>
                         </div>
 
                         <!-- Existing Menu Items List -->
                         <div class="admin-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(192, 192, 192, 0.15); padding-bottom: 0.8rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(245, 235, 208, 0.15); padding-bottom: 0.8rem;">
                                 <h2 style="color: var(--white); font-size: 1.4rem; margin: 0;">Existing Menu Items</h2>
-                                <span id="item-count-badge" class="table-badge" style="border-color: var(--marigold-gold); color: var(--marigold-gold);">
+                                <span id="item-count-badge" class="table-badge" style="border-color: var(--wine-red); color: var(--light-sand);">
                                     0 Items
                                 </span>
                             </div>
@@ -208,7 +208,7 @@
                             <span class="logo-sub">KITCHEN &amp; DINING</span>
                         </div>
                     </div>
-                    <p class="brand-tagline-text" style="color: var(--marigold-gold); margin-bottom: 0.8rem;">
+                    <p class="brand-tagline-text" style="color: var(--light-sand); margin-bottom: 0.8rem;">
                         &ldquo;Crafted for the Finest Tastes.&rdquo;
                     </p>
                     <p>
@@ -216,18 +216,18 @@
                         impeccable hospitality, and timeless regal ambience.
                     </p>
                     <p style="margin-top: 0.8rem;">
-                        <strong class="gold-text">Direct Call:</strong> 
-                        <a href="tel:+918328594373" style="color: var(--light-silver); text-decoration: underline;">+91 832 859 4373</a>
+                        <strong class="wine-text">Direct Call:</strong> 
+                        <a href="tel:+918328594373" style="color: var(--light-sand); text-decoration: underline;">+91 832 859 4373</a>
                     </p>
                 </div>
 
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="menu.html">Full Menu</a></li>
-                        <li><a href="reach-us.html">Reach Us</a></li>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#menu">Full Menu</a></li>
+                        <li><a href="index.html#reach-us">Reach Us</a></li>
                     </ul>
                 </div>
 
@@ -235,15 +235,15 @@
                     <h4>DevOps Lab</h4>
                     <ul class="footer-links">
                         <li><a href="admin.html">Admin Portal</a></li>
-                        <li><span style="color: var(--silver);">Dockerized App</span></li>
-                        <li><span style="color: var(--silver);">CI/CD Jenkins</span></li>
-                        <li><span style="color: var(--silver);">Git Version Control</span></li>
+                        <li><span style="color: var(--sand-muted);">Dockerized App</span></li>
+                        <li><span style="color: var(--sand-muted);">CI/CD Jenkins</span></li>
+                        <li><span style="color: var(--sand-muted);">Git Version Control</span></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
                     <h4>Operating Hours</h4>
-                    <p style="margin-bottom: 0.4rem;"><strong class="gold-text">Open All Week:</strong></p>
+                    <p style="margin-bottom: 0.4rem;"><strong class="sand-text">Open All Week:</strong></p>
                     <p style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--white); font-weight: 700;">12:00 PM – 12:00 AM</p>
                     <p><span class="silver-text">Monday through Sunday</span></p>
                 </div>

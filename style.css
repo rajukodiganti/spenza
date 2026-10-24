@@ -1,17 +1,20 @@
 :root {
     --primary-black: #101010;
-    --secondary-black: #1A1A1A;
-    --card-black: #161616;
+    --secondary-black: #161616;
+    --card-black: #1A1A1A;
+    --wine-red: #7F011F;
+    --deep-wine: #5A0015;
+    --light-sand: #F5EBD0;
+    --sand-gold: #E8D5B0;
+    --sand-muted: #D1C5A8;
     --silver: #C0C0C0;
-    --light-silver: #E5E5E5;
-    --marigold-gold: #EAAE00;
-    --deep-marigold: #C98B00;
     --white: #FFFFFF;
     --font-heading: 'Cinzel', 'Playfair Display', serif;
     --font-body: 'Montserrat', sans-serif;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    --border-subtle: 1px solid rgba(192, 192, 192, 0.2);
-    --gold-glow: 0 4px 20px rgba(234, 174, 0, 0.25);
+    --border-subtle: 1px solid rgba(245, 235, 208, 0.15);
+    --wine-glow: 0 4px 22px rgba(127, 1, 31, 0.4);
+    --sand-glow: 0 4px 20px rgba(245, 235, 208, 0.2);
 }
 
 /* Reset & Global */
@@ -27,7 +30,7 @@ html {
 
 body {
     background-color: var(--primary-black);
-    color: var(--light-silver);
+    color: var(--light-sand);
     font-family: var(--font-body);
     font-size: 16px;
     line-height: 1.6;
@@ -65,12 +68,16 @@ h1, h2, h3, h4, .brand-logo {
     font-weight: 600;
 }
 
-.gold-text {
-    color: var(--marigold-gold);
+.wine-text {
+    color: var(--wine-red);
+}
+
+.sand-text {
+    color: var(--light-sand);
 }
 
 .silver-text {
-    color: var(--silver);
+    color: var(--sand-muted);
 }
 
 .section-title-wrap {
@@ -79,7 +86,7 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .section-subtitle {
-    color: var(--marigold-gold);
+    color: var(--light-sand);
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 3px;
@@ -101,20 +108,21 @@ h1, h2, h3, h4, .brand-logo {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
+    width: 70px;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--marigold-gold), transparent);
+    background: linear-gradient(90deg, transparent, var(--wine-red), var(--light-sand), transparent);
 }
 
-/* Header & Navigation */
+/* Header & Sticky Navigation */
 .site-header {
-    background-color: rgba(16, 16, 16, 0.96);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(192, 192, 192, 0.15);
+    background-color: rgba(16, 16, 16, 0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245, 235, 208, 0.15);
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 1.2rem 0;
+    padding: 1rem 0;
+    transition: var(--transition);
 }
 
 .nav-container {
@@ -131,23 +139,23 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .brand-logo-img {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    border: 1.5px solid var(--marigold-gold);
-    box-shadow: 0 0 12px rgba(234, 174, 0, 0.35);
+    border: 1.5px solid var(--wine-red);
+    box-shadow: 0 0 14px rgba(127, 1, 31, 0.5);
     transition: var(--transition);
 }
 
 .brand-logo:hover .brand-logo-img {
     transform: scale(1.05);
-    box-shadow: var(--gold-glow);
+    box-shadow: var(--wine-glow);
 }
 
 .brand-logo-img-large {
-    width: 72px;
-    height: 72px;
+    width: 74px;
+    height: 74px;
 }
 
 .logo-text-wrap {
@@ -157,7 +165,7 @@ h1, h2, h3, h4, .brand-logo {
 
 .logo-main {
     font-size: 1.45rem;
-    color: var(--marigold-gold);
+    color: var(--light-sand);
     letter-spacing: 3px;
     font-weight: 700;
     line-height: 1.1;
@@ -165,17 +173,18 @@ h1, h2, h3, h4, .brand-logo {
 
 .logo-sub {
     font-size: 0.65rem;
-    color: var(--silver);
-    letter-spacing: 3.5px;
+    color: var(--wine-red);
+    letter-spacing: 3px;
     text-transform: uppercase;
     margin-top: 2px;
+    font-weight: 600;
 }
 
 .brand-tagline-text {
     font-style: italic;
     font-family: var(--font-heading);
-    color: var(--silver);
-    font-size: 0.85rem;
+    color: var(--sand-gold);
+    font-size: 0.9rem;
     letter-spacing: 0.5px;
     margin-top: 3px;
 }
@@ -183,12 +192,12 @@ h1, h2, h3, h4, .brand-logo {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.8rem;
 }
 
 .nav-links a {
-    color: var(--silver);
-    font-size: 0.95rem;
+    color: var(--light-sand);
+    font-size: 0.92rem;
     font-weight: 500;
     letter-spacing: 1px;
     position: relative;
@@ -197,7 +206,7 @@ h1, h2, h3, h4, .brand-logo {
 
 .nav-links a:hover,
 .nav-links a.active {
-    color: var(--marigold-gold);
+    color: var(--wine-red);
 }
 
 .nav-links a::after {
@@ -207,7 +216,7 @@ h1, h2, h3, h4, .brand-logo {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--marigold-gold);
+    background-color: var(--wine-red);
     transition: var(--transition);
 }
 
@@ -217,16 +226,18 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .admin-nav-link {
-    border: 1px solid var(--marigold-gold);
+    border: 1px solid var(--wine-red) !important;
     border-radius: 4px;
     padding: 0.4rem 1rem !important;
-    color: var(--marigold-gold) !important;
+    color: var(--light-sand) !important;
+    background-color: rgba(127, 1, 31, 0.2);
 }
 
 .admin-nav-link:hover,
 .admin-nav-link.active {
-    background-color: var(--marigold-gold);
-    color: var(--primary-black) !important;
+    background-color: var(--wine-red) !important;
+    color: var(--white) !important;
+    box-shadow: var(--wine-glow);
 }
 
 .admin-nav-link::after {
@@ -245,7 +256,7 @@ h1, h2, h3, h4, .brand-logo {
     display: block;
     width: 26px;
     height: 2px;
-    background-color: var(--marigold-gold);
+    background-color: var(--light-sand);
     margin: 5px 0;
     transition: var(--transition);
 }
@@ -253,11 +264,11 @@ h1, h2, h3, h4, .brand-logo {
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 0.85rem 2rem;
+    padding: 0.85rem 1.8rem;
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 600;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
     border-radius: 4px;
     cursor: pointer;
@@ -265,74 +276,89 @@ h1, h2, h3, h4, .brand-logo {
     border: 1px solid transparent;
 }
 
+.btn-wine,
 .btn-gold {
-    background-color: var(--marigold-gold);
-    color: var(--primary-black);
-    box-shadow: 0 4px 15px rgba(234, 174, 0, 0.2);
+    background-color: var(--wine-red);
+    color: var(--light-sand);
+    border: 1px solid var(--wine-red);
+    box-shadow: 0 4px 15px rgba(127, 1, 31, 0.4);
 }
 
+.btn-wine:hover,
 .btn-gold:hover {
-    background-color: var(--deep-marigold);
-    color: var(--primary-black);
-    box-shadow: var(--gold-glow);
+    background-color: var(--deep-wine);
+    color: var(--white);
+    box-shadow: var(--wine-glow);
     transform: translateY(-2px);
 }
 
+.btn-outline-sand,
 .btn-outline-silver {
-    background-color: transparent;
-    border: 1px solid var(--silver);
-    color: var(--light-silver);
+    background-color: rgba(16, 16, 16, 0.6);
+    border: 1px solid var(--light-sand);
+    color: var(--light-sand);
+    backdrop-filter: blur(4px);
 }
 
+.btn-outline-sand:hover,
 .btn-outline-silver:hover {
-    border-color: var(--marigold-gold);
-    color: var(--marigold-gold);
+    border-color: var(--wine-red);
+    color: var(--white);
+    background-color: rgba(127, 1, 31, 0.35);
     transform: translateY(-2px);
 }
 
-/* Hero Section */
+/* Hero Section with Interior Background Image */
 .hero-section {
-    background: linear-gradient(180deg, rgba(16, 16, 16, 0.9) 0%, rgba(26, 26, 26, 0.95) 100%),
-                radial-gradient(circle at 80% 20%, rgba(234, 174, 0, 0.08) 0%, transparent 60%);
-    padding: 5rem 0 6rem;
+    position: relative;
+    background: linear-gradient(180deg, rgba(16, 16, 16, 0.78) 0%, rgba(16, 16, 16, 0.88) 60%, var(--primary-black) 100%),
+                url('hero-bg.jpg') center/cover no-repeat;
+    padding: 6.5rem 0 6rem;
     border-bottom: var(--border-subtle);
+    min-height: 82vh;
+    display: flex;
+    align-items: center;
 }
 
 .hero-grid {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1.15fr 0.85fr;
     gap: 4rem;
     align-items: center;
 }
 
 .hero-content {
-    max-width: 580px;
+    max-width: 620px;
 }
 
 .hero-badge {
     display: inline-block;
-    color: var(--marigold-gold);
+    color: var(--light-sand);
+    background-color: rgba(127, 1, 31, 0.65);
+    border: 1px solid var(--wine-red);
+    border-radius: 4px;
     font-size: 0.85rem;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 1.2rem;
-    border-left: 2px solid var(--marigold-gold);
-    padding-left: 0.75rem;
+    padding: 0.4rem 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .hero-title {
-    font-size: 3.2rem;
-    line-height: 1.2;
+    font-size: 3.3rem;
+    line-height: 1.15;
     color: var(--white);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.3rem;
 }
 
 .hero-desc {
-    color: var(--silver);
+    color: var(--light-sand);
     font-size: 1.1rem;
     line-height: 1.8;
     margin-bottom: 2.2rem;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .hero-image-wrapper {
@@ -343,13 +369,13 @@ h1, h2, h3, h4, .brand-logo {
     position: relative;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid rgba(192, 192, 192, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(245, 235, 208, 0.3);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.8);
 }
 
 .hero-image-frame img {
     width: 100%;
-    height: 440px;
+    height: 420px;
     object-fit: cover;
     transition: transform 0.6s ease;
 }
@@ -362,17 +388,17 @@ h1, h2, h3, h4, .brand-logo {
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 2px solid var(--marigold-gold);
+    border: 2px solid var(--wine-red);
     top: 15px;
     left: 15px;
     border-radius: 8px;
     z-index: -1;
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
-/* Highlights Section (Home) */
+/* Highlights Section */
 .highlights-section {
-    padding: 6rem 0;
+    padding: 5.5rem 0;
     background-color: var(--secondary-black);
     border-bottom: var(--border-subtle);
 }
@@ -384,7 +410,7 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .highlight-card {
-    background-color: var(--primary-black);
+    background-color: var(--card-black);
     border: var(--border-subtle);
     border-radius: 8px;
     overflow: hidden;
@@ -392,9 +418,9 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .highlight-card:hover {
-    border-color: var(--marigold-gold);
+    border-color: var(--wine-red);
     transform: translateY(-6px);
-    box-shadow: var(--gold-glow);
+    box-shadow: var(--wine-glow);
 }
 
 .highlight-img-wrap {
@@ -425,15 +451,16 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .highlight-desc {
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 0.95rem;
     line-height: 1.6;
 }
 
-/* About Page / About Section */
+/* About Us Section */
 .about-section {
-    padding: 5rem 0;
+    padding: 6rem 0;
     background-color: var(--primary-black);
+    border-bottom: var(--border-subtle);
 }
 
 .about-grid {
@@ -448,14 +475,14 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .about-title {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
     color: var(--white);
     margin-bottom: 1.5rem;
     line-height: 1.3;
 }
 
 .about-para {
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 1.05rem;
     line-height: 1.9;
     margin-bottom: 1.5rem;
@@ -471,21 +498,21 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .feature-box h4 {
-    color: var(--marigold-gold);
+    color: var(--light-sand);
     font-size: 1.1rem;
     margin-bottom: 0.4rem;
 }
 
 .feature-box p {
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 0.9rem;
 }
 
 .about-img-frame {
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid rgba(192, 192, 192, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(245, 235, 208, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     position: relative;
 }
 
@@ -495,7 +522,13 @@ h1, h2, h3, h4, .brand-logo {
     object-fit: cover;
 }
 
-/* Category Filter Bar (Menu Page) */
+/* Menu Section & Category Filter Bar */
+.menu-section {
+    padding: 6rem 0;
+    background-color: var(--secondary-black);
+    border-bottom: var(--border-subtle);
+}
+
 .category-filter-bar {
     display: flex;
     justify-content: center;
@@ -505,9 +538,9 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .category-btn {
-    background-color: var(--secondary-black);
-    color: var(--silver);
-    border: 1px solid var(--silver);
+    background-color: var(--card-black);
+    color: var(--light-sand);
+    border: 1px solid rgba(245, 235, 208, 0.3);
     padding: 0.65rem 1.6rem;
     font-family: var(--font-body);
     font-size: 0.9rem;
@@ -519,16 +552,17 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .category-btn:hover {
-    border-color: var(--marigold-gold);
-    color: var(--marigold-gold);
+    border-color: var(--wine-red);
+    color: var(--white);
+    background-color: rgba(127, 1, 31, 0.2);
     transform: translateY(-2px);
 }
 
 .category-btn.active {
-    background-color: var(--marigold-gold);
-    color: var(--primary-black);
-    border-color: var(--marigold-gold);
-    box-shadow: 0 4px 15px rgba(234, 174, 0, 0.3);
+    background-color: var(--wine-red);
+    color: var(--light-sand);
+    border-color: var(--wine-red);
+    box-shadow: var(--wine-glow);
     font-weight: 700;
 }
 
@@ -537,11 +571,11 @@ h1, h2, h3, h4, .brand-logo {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 2.2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 .menu-card {
-    background-color: var(--secondary-black);
+    background-color: var(--card-black);
     border: var(--border-subtle);
     border-radius: 8px;
     overflow: hidden;
@@ -552,8 +586,8 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .menu-card:hover {
-    border-color: var(--marigold-gold);
-    box-shadow: var(--gold-glow);
+    border-color: var(--wine-red);
+    box-shadow: var(--wine-glow);
     transform: translateY(-5px);
 }
 
@@ -580,9 +614,9 @@ h1, h2, h3, h4, .brand-logo {
     position: absolute;
     top: 12px;
     right: 12px;
-    background-color: rgba(16, 16, 16, 0.85);
-    color: var(--marigold-gold);
-    border: 1px solid var(--marigold-gold);
+    background-color: rgba(127, 1, 31, 0.85);
+    color: var(--light-sand);
+    border: 1px solid var(--wine-red);
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
     font-weight: 600;
@@ -615,15 +649,19 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .food-price {
-    color: var(--marigold-gold);
+    color: var(--light-sand);
     font-size: 1.25rem;
     font-weight: 700;
     white-space: nowrap;
     font-family: var(--font-heading);
+    background-color: rgba(127, 1, 31, 0.25);
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+    border: 1px solid rgba(127, 1, 31, 0.4);
 }
 
 .food-desc {
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 0.92rem;
     line-height: 1.6;
     margin-bottom: 1rem;
@@ -632,7 +670,7 @@ h1, h2, h3, h4, .brand-logo {
 
 .empty-menu-msg {
     text-align: center;
-    color: var(--silver);
+    color: var(--sand-muted);
     padding: 3rem;
     font-size: 1.1rem;
     border: var(--border-subtle);
@@ -640,10 +678,11 @@ h1, h2, h3, h4, .brand-logo {
     grid-column: 1 / -1;
 }
 
-/* Contact / Reach Us Page */
+/* Contact / Reach Us Section */
 .reach-us-section {
-    padding: 5rem 0;
+    padding: 6rem 0;
     background-color: var(--primary-black);
+    border-bottom: var(--border-subtle);
 }
 
 .contact-grid {
@@ -656,23 +695,24 @@ h1, h2, h3, h4, .brand-logo {
 .contact-info-list {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.8rem;
 }
 
 .contact-card {
-    background-color: var(--secondary-black);
+    background-color: var(--card-black);
     border: var(--border-subtle);
     border-radius: 8px;
-    padding: 1.8rem;
+    padding: 1.6rem;
     display: flex;
-    gap: 1.5rem;
+    gap: 1.4rem;
     align-items: flex-start;
     transition: var(--transition);
 }
 
 .contact-card:hover {
-    border-color: var(--marigold-gold);
+    border-color: var(--wine-red);
     transform: translateX(5px);
+    box-shadow: var(--wine-glow);
 }
 
 .contact-icon {
@@ -680,12 +720,12 @@ h1, h2, h3, h4, .brand-logo {
     height: 48px;
     min-width: 48px;
     border-radius: 50%;
-    background-color: rgba(234, 174, 0, 0.1);
-    border: 1px solid var(--marigold-gold);
+    background-color: rgba(127, 1, 31, 0.25);
+    border: 1px solid var(--wine-red);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--marigold-gold);
+    color: var(--light-sand);
 }
 
 .contact-icon svg {
@@ -701,23 +741,23 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .contact-details p {
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 0.95rem;
     line-height: 1.6;
 }
 
 .contact-details a {
-    color: var(--marigold-gold);
+    color: var(--light-sand);
     text-decoration: underline;
     text-underline-offset: 4px;
 }
 
 .contact-details a:hover {
-    color: var(--deep-marigold);
+    color: var(--wine-red);
 }
 
 .map-wrapper {
-    background-color: var(--secondary-black);
+    background-color: var(--card-black);
     border: var(--border-subtle);
     border-radius: 8px;
     padding: 1.2rem;
@@ -731,7 +771,7 @@ h1, h2, h3, h4, .brand-logo {
     height: 380px;
     border-radius: 6px;
     overflow: hidden;
-    border: 1px solid rgba(192, 192, 192, 0.2);
+    border: 1px solid rgba(245, 235, 208, 0.2);
 }
 
 .map-frame iframe {
@@ -751,38 +791,18 @@ h1, h2, h3, h4, .brand-logo {
     background-color: var(--primary-black);
 }
 
-/* Admin Login Card */
 .admin-login-wrapper {
     max-width: 440px;
     margin: 1.5rem auto 3rem;
 }
 
 .admin-login-card {
-    background-color: var(--secondary-black);
-    border: 1px solid rgba(234, 174, 0, 0.4);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), var(--gold-glow);
+    background-color: var(--card-black);
+    border: 1px solid var(--wine-red);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), var(--wine-glow);
     border-radius: 8px;
     padding: 2.5rem 2rem;
     text-align: center;
-}
-
-.admin-login-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: rgba(234, 174, 0, 0.1);
-    border: 1px solid var(--marigold-gold);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--marigold-gold);
-    margin-bottom: 1.2rem;
-}
-
-.admin-login-icon svg {
-    width: 28px;
-    height: 28px;
-    fill: currentColor;
 }
 
 .admin-login-card h2 {
@@ -792,7 +812,7 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .admin-login-card p {
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 0.9rem;
     margin-bottom: 1.8rem;
 }
@@ -801,7 +821,7 @@ h1, h2, h3, h4, .brand-logo {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--secondary-black);
+    background-color: var(--card-black);
     border: var(--border-subtle);
     border-radius: 6px;
     padding: 0.8rem 1.4rem;
@@ -812,36 +832,36 @@ h1, h2, h3, h4, .brand-logo {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 0.92rem;
 }
 
 .admin-user-badge {
-    background-color: rgba(234, 174, 0, 0.15);
-    color: var(--marigold-gold);
-    border: 1px solid var(--marigold-gold);
+    background-color: rgba(127, 1, 31, 0.3);
+    color: var(--light-sand);
+    border: 1px solid var(--wine-red);
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
     font-weight: 600;
 }
 
 .admin-demo-alert {
-    background: rgba(234, 174, 0, 0.08);
-    border: 1px solid var(--marigold-gold);
+    background: rgba(127, 1, 31, 0.15);
+    border: 1px solid var(--wine-red);
     border-radius: 6px;
     padding: 1rem 1.5rem;
     margin-bottom: 3rem;
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: var(--light-silver);
+    color: var(--light-sand);
     font-size: 0.92rem;
 }
 
 .admin-demo-alert svg {
     width: 28px;
     height: 28px;
-    fill: var(--marigold-gold);
+    fill: var(--wine-red);
     min-width: 28px;
 }
 
@@ -853,7 +873,7 @@ h1, h2, h3, h4, .brand-logo {
 }
 
 .admin-card {
-    background-color: var(--secondary-black);
+    background-color: var(--card-black);
     border: var(--border-subtle);
     border-radius: 8px;
     padding: 2.2rem;
@@ -865,7 +885,7 @@ h1, h2, h3, h4, .brand-logo {
     font-size: 1.4rem;
     margin-bottom: 1.5rem;
     padding-bottom: 0.8rem;
-    border-bottom: 1px solid rgba(192, 192, 192, 0.15);
+    border-bottom: 1px solid rgba(245, 235, 208, 0.15);
 }
 
 .form-group {
@@ -874,7 +894,7 @@ h1, h2, h3, h4, .brand-logo {
 
 .form-group label {
     display: block;
-    color: var(--silver);
+    color: var(--light-sand);
     font-size: 0.88rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
@@ -884,7 +904,7 @@ h1, h2, h3, h4, .brand-logo {
 .form-control {
     width: 100%;
     background-color: var(--primary-black);
-    border: 1px solid rgba(192, 192, 192, 0.3);
+    border: 1px solid rgba(245, 235, 208, 0.25);
     color: var(--white);
     padding: 0.8rem 1rem;
     border-radius: 4px;
@@ -895,8 +915,8 @@ h1, h2, h3, h4, .brand-logo {
 
 .form-control:focus {
     outline: none;
-    border-color: var(--marigold-gold);
-    box-shadow: 0 0 8px rgba(234, 174, 0, 0.3);
+    border-color: var(--wine-red);
+    box-shadow: 0 0 8px rgba(127, 1, 31, 0.5);
 }
 
 textarea.form-control {
@@ -909,13 +929,13 @@ select.form-control {
 }
 
 select.form-control option {
-    background-color: var(--secondary-black);
+    background-color: var(--card-black);
     color: var(--white);
 }
 
 .helper-text {
     font-size: 0.8rem;
-    color: var(--silver);
+    color: var(--sand-muted);
     margin-top: 0.35rem;
 }
 
@@ -928,8 +948,8 @@ select.form-control option {
 
 .image-chip {
     background-color: var(--primary-black);
-    border: 1px solid rgba(192, 192, 192, 0.25);
-    color: var(--silver);
+    border: 1px solid rgba(245, 235, 208, 0.2);
+    color: var(--light-sand);
     padding: 0.25rem 0.6rem;
     font-size: 0.75rem;
     border-radius: 3px;
@@ -938,8 +958,9 @@ select.form-control option {
 }
 
 .image-chip:hover {
-    border-color: var(--marigold-gold);
-    color: var(--marigold-gold);
+    border-color: var(--wine-red);
+    background-color: var(--wine-red);
+    color: var(--white);
 }
 
 .alert-message {
@@ -957,9 +978,9 @@ select.form-control option {
 }
 
 .alert-error {
-    background-color: rgba(231, 76, 60, 0.15);
+    background-color: rgba(231, 76, 60, 0.2);
     border: 1px solid #e74c3c;
-    color: #e74c3c;
+    color: #ff7675;
 }
 
 .table-responsive {
@@ -976,13 +997,13 @@ select.form-control option {
 
 .admin-table th {
     background-color: var(--primary-black);
-    color: var(--marigold-gold);
+    color: var(--light-sand);
     font-family: var(--font-heading);
     letter-spacing: 1px;
     font-weight: 600;
     text-align: left;
     padding: 0.9rem 1rem;
-    border-bottom: 1px solid rgba(192, 192, 192, 0.2);
+    border-bottom: 1px solid rgba(245, 235, 208, 0.2);
     position: sticky;
     top: 0;
     z-index: 2;
@@ -990,14 +1011,14 @@ select.form-control option {
 
 .admin-table td {
     padding: 0.85rem 1rem;
-    border-bottom: 1px solid rgba(192, 192, 192, 0.1);
-    color: var(--silver);
+    border-bottom: 1px solid rgba(245, 235, 208, 0.1);
+    color: var(--sand-muted);
     vertical-align: middle;
 }
 
 .admin-table tr:hover td {
-    background-color: rgba(234, 174, 0, 0.03);
-    color: var(--light-silver);
+    background-color: rgba(127, 1, 31, 0.1);
+    color: var(--white);
 }
 
 .table-thumb {
@@ -1005,7 +1026,7 @@ select.form-control option {
     height: 44px;
     border-radius: 4px;
     object-fit: cover;
-    border: 1px solid rgba(192, 192, 192, 0.3);
+    border: 1px solid rgba(245, 235, 208, 0.3);
 }
 
 .table-badge {
@@ -1013,16 +1034,16 @@ select.form-control option {
     padding: 0.2rem 0.6rem;
     font-size: 0.75rem;
     border-radius: 3px;
-    background-color: rgba(192, 192, 192, 0.1);
-    border: 1px solid rgba(192, 192, 192, 0.3);
-    color: var(--silver);
+    background-color: rgba(127, 1, 31, 0.2);
+    border: 1px solid var(--wine-red);
+    color: var(--light-sand);
     font-weight: 500;
 }
 
 /* Footer */
 .site-footer {
     background-color: var(--primary-black);
-    border-top: 1px solid rgba(192, 192, 192, 0.15);
+    border-top: 1px solid rgba(245, 235, 208, 0.15);
     padding: 4.5rem 0 2rem;
     margin-top: auto;
 }
@@ -1047,13 +1068,13 @@ select.form-control option {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 30px;
+    width: 35px;
     height: 2px;
-    background-color: var(--marigold-gold);
+    background-color: var(--wine-red);
 }
 
 .footer-col p {
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 0.92rem;
     line-height: 1.7;
 }
@@ -1063,23 +1084,23 @@ select.form-control option {
 }
 
 .footer-links a {
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 0.92rem;
     transition: var(--transition);
 }
 
 .footer-links a:hover {
-    color: var(--marigold-gold);
+    color: var(--wine-red);
     padding-left: 5px;
 }
 
 .footer-bottom {
     padding-top: 2rem;
-    border-top: 1px solid rgba(192, 192, 192, 0.1);
+    border-top: 1px solid rgba(245, 235, 208, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--silver);
+    color: var(--sand-muted);
     font-size: 0.85rem;
     flex-wrap: wrap;
     gap: 1rem;
@@ -1109,9 +1130,8 @@ select.form-control option {
         text-align: center;
     }
 
-    .hero-badge {
-        border-left: none;
-        padding-left: 0;
+    .hero-actions {
+        justify-content: center;
     }
 
     .about-text {
@@ -1129,8 +1149,8 @@ select.form-control option {
         background-color: var(--primary-black);
         flex-direction: column;
         padding: 1.5rem 0;
-        border-bottom: 1px solid rgba(192, 192, 192, 0.2);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+        border-bottom: 1px solid rgba(245, 235, 208, 0.2);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.8);
         gap: 1.2rem;
     }
 
@@ -1143,7 +1163,7 @@ select.form-control option {
     }
 
     .hero-title {
-        font-size: 2.3rem;
+        font-size: 2.4rem;
     }
 
     .highlights-grid {

@@ -29,6 +29,7 @@ pipeline {
                         'style.css',
                         'script.js',
                         'logo.png',
+                        'hero-bg.jpg',
                         'Dockerfile'
                     ]
 
