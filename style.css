@@ -144,6 +144,9 @@ h1, h2, h3, h4, .brand-logo {
     align-items: center;
     gap: 0.85rem;
     text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .brand-logo-img {
@@ -196,31 +199,36 @@ h1, h2, h3, h4, .brand-logo {
 
 .nav-links a {
     color: var(--light-sand);
-    font-size: 0.88rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
     position: relative;
-    padding: 0.4rem 0;
+    padding: 0.4rem 0.2rem;
+    transition: var(--transition);
 }
 
-.nav-links a:hover,
+.nav-links a:hover {
+    color: var(--white);
+}
+
 .nav-links a.active {
     color: var(--white);
+    font-weight: 600;
 }
 
 .nav-links a::after {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: -6px;
     left: 0;
     width: 0;
-    height: 2px;
+    height: 3px;
     background-color: var(--wine-red);
-    transition: var(--transition);
+    box-shadow: 0 0 10px rgba(127, 1, 31, 0.7);
+    border-radius: 2px;
+    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.nav-links a:hover::after,
 .nav-links a.active::after {
     width: 100%;
 }
@@ -349,11 +357,13 @@ h1, h2, h3, h4, .brand-logo {
     position: relative;
     background: linear-gradient(180deg, rgba(16, 16, 16, 0.72) 0%, rgba(16, 16, 16, 0.8) 50%, rgba(16, 16, 16, 0.98) 100%),
                 url('hero-bg.jpg') center/cover no-repeat;
-    min-height: 94vh;
+    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     border-bottom: var(--border-subtle);
-    padding: 4rem 0 6rem;
+    padding: 0;
+    overflow: hidden;
 }
 
 .hero-editorial-wrap {
@@ -418,7 +428,7 @@ h1, h2, h3, h4, .brand-logo {
 /* Rating Badge in Hero (Bottom Right) */
 .hero-rating-box {
     position: absolute;
-    bottom: 3.5rem;
+    bottom: 2.8rem;
     right: 6%;
     text-align: right;
     z-index: 10;
@@ -449,15 +459,15 @@ h1, h2, h3, h4, .brand-logo {
     font-weight: 600;
 }
 
-/* Animated Scroll Indicator (Bottom Center) */
+/* Animated Scroll Indicator (Anchored at the end of the first page) */
 .hero-scroll-tag {
     position: absolute;
-    bottom: 2.2rem;
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.75rem;
+    font-size: 0.76rem;
     letter-spacing: 4px;
-    color: var(--sand-muted);
+    color: var(--light-sand);
     text-transform: uppercase;
     font-weight: 600;
     display: flex;
@@ -466,10 +476,17 @@ h1, h2, h3, h4, .brand-logo {
     gap: 0.4rem;
     animation: bounceScroll 2s infinite;
     cursor: pointer;
+    z-index: 25;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.hero-scroll-tag:hover {
+    color: var(--white);
 }
 
 .hero-scroll-tag span {
-    opacity: 0.85;
+    opacity: 0.9;
 }
 
 .scroll-arrow {

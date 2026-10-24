@@ -380,6 +380,14 @@ function setupMobileMenu() {
             const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
             toggle.setAttribute('aria-expanded', !expanded);
         });
+
+        // Close menu on mobile when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('show');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
     }
 }
 
@@ -455,38 +463,71 @@ function setupAdminAuth() {
 
 /**
  * Setup Scroll Animations and Active Navigation Spy
+ * Moves the active Wine-Red underline smoothly as the user navigates between sections:
+ * Home (#home), About Us (#about), Menu (#menu), and Reach Us (#reach-us)
  */
 function setupScrollEffects() {
     const header = document.querySelector('.site-header');
-    const sections = document.querySelectorAll('section[id]');
+    const sections = [
+        document.getElementById('home'),
+        document.getElementById('about'),
+        document.getElementById('menu'),
+        document.getElementById('reach-us')
+    ].filter(Boolean);
+
     const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
 
-    // Header scroll background toggle & Active Nav Spy
-    window.addEventListener('scroll', () => {
-        const scrollY = window.pageYOffset;
+    function updateActiveNav() {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const headerHeight = header ? header.offsetHeight : 70;
 
         if (header) {
-            if (scrollY > 60) {
+            if (scrollY > 50) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
         }
 
-        // Active link spy
-        sections.forEach(current => {
-            const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 120;
-            const sectionId = current.getAttribute('id');
+        // Active link scroll spy
+        const scrollBottom = window.innerHeight + scrollY;
+        const docHeight = document.documentElement.scrollHeight;
 
-            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
+        let currentActiveId = 'home';
+
+        // Check if user is scrolled to the bottom of the page
+        if (docHeight - scrollBottom < 90) {
+            currentActiveId = 'reach-us';
+        } else {
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - headerHeight - 120;
+                const sectionHeight = section.offsetHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    currentActiveId = section.getAttribute('id');
+                }
+            });
+        }
+
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === `#${currentActiveId}`) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
             }
+        });
+    }
+
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    window.addEventListener('resize', updateActiveNav);
+    // Initial run on page load
+    updateActiveNav();
+
+    // Instant click feedback
+    navLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
         });
     });
 
@@ -511,6 +552,39 @@ function setupScrollEffects() {
         // Fallback for browsers without IntersectionObserver
         revealElements.forEach(el => el.classList.add('active'));
     }
+}
+
+/**
+ * Secret 4-Tap Admin Trigger
+ * Tapping 4 times in quick succession on the SPENZA brand logo opens the admin panel (admin.html).
+ */
+function setupSecretAdminTrigger() {
+    const brandLogo = document.querySelector('.brand-logo');
+    if (!brandLogo) return;
+
+    let tapCount = 0;
+    let tapTimeout = null;
+
+    brandLogo.addEventListener('click', (e) => {
+        tapCount++;
+
+        if (tapTimeout) {
+            clearTimeout(tapTimeout);
+        }
+
+        if (tapCount >= 4) {
+            e.preventDefault();
+            e.stopPropagation();
+            tapCount = 0;
+            window.location.href = 'admin.html';
+            return;
+        }
+
+        // Reset if inactivity exceeds 1.4 seconds
+        tapTimeout = setTimeout(() => {
+            tapCount = 0;
+        }, 1400);
+    });
 }
 
 /**
@@ -564,6 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMobileMenu();
     setupScrollEffects();
     setupPrivacyModal();
+    setupSecretAdminTrigger();
 
     // Check which page we are on and initialize accordingly
     if (document.getElementById('menu-grid')) {
