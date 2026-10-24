@@ -296,17 +296,33 @@ function renderAdminFoodGrid(filterCategory = currentAdminCategory, searchQuery 
                     <p class="admin-dish-desc">${escapeHtml(item.description)}</p>
                     <div class="admin-card-foot">
                         <span class="admin-dish-id">ID: #${item.id}</span>
-                        <button type="button" class="btn-delete-dish" data-id="${item.id}" title="Remove dish from menu">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                            </svg>
-                            Delete
-                        </button>
+                        <div class="admin-card-actions">
+                            <button type="button" class="btn-edit-dish" data-id="${item.id}" title="Edit dish details">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                </svg>
+                                Edit
+                            </button>
+                            <button type="button" class="btn-delete-dish" data-id="${item.id}" title="Remove dish from menu">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                </svg>
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         `;
     }).join('');
+
+    // Attach edit button listeners
+    gridContainer.querySelectorAll('.btn-edit-dish').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = e.currentTarget.getAttribute('data-id');
+            openEditDishModal(id);
+        });
+    });
 
     // Attach delete button listeners
     gridContainer.querySelectorAll('.btn-delete-dish').forEach(btn => {
@@ -315,6 +331,58 @@ function renderAdminFoodGrid(filterCategory = currentAdminCategory, searchQuery 
             deleteMenuItem(id);
         });
     });
+}
+
+/**
+ * Open Modal in Edit Mode for a Menu Item
+ */
+function openEditDishModal(id) {
+    const items = getMenuItems();
+    const dish = items.find(item => String(item.id) === String(id));
+    if (!dish) return;
+
+    const modal = document.getElementById('add-food-modal');
+    const modalTitle = document.getElementById('modalTitleText');
+    const modalSubtitle = document.getElementById('modalSubtitleText');
+    const submitBtn = document.getElementById('modalSubmitBtn');
+    const editDishIdInput = document.getElementById('editDishId');
+
+    const nameInput = document.getElementById('foodName');
+    const descInput = document.getElementById('foodDesc');
+    const priceInput = document.getElementById('foodPrice');
+    const categoryInput = document.getElementById('foodCategory');
+    const tagInput = document.getElementById('foodTag');
+    const imageHidden = document.getElementById('foodImageBase64');
+    const imagePreview = document.getElementById('imagePreview');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const formAlert = document.getElementById('form-alert');
+
+    if (formAlert) formAlert.style.display = 'none';
+
+    if (editDishIdInput) editDishIdInput.value = dish.id;
+    if (modalTitle) modalTitle.textContent = '✏️ Edit Menu Item';
+    if (modalSubtitle) modalSubtitle.textContent = `Modify details for "${dish.name}". Changes update immediately.`;
+    if (submitBtn) submitBtn.textContent = 'Update Menu Item';
+
+    if (nameInput) nameInput.value = dish.name;
+    if (descInput) descInput.value = dish.description;
+    if (priceInput) priceInput.value = dish.price;
+    if (categoryInput) categoryInput.value = dish.category;
+    if (tagInput) tagInput.value = dish.tag || 'NONE';
+    if (imageHidden) imageHidden.value = dish.image;
+
+    if (imagePreview) {
+        imagePreview.src = dish.image;
+        imagePreview.style.display = 'block';
+    }
+    if (fileNameDisplay) {
+        fileNameDisplay.textContent = 'Current dish photo loaded (click to replace)';
+    }
+
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 /**
@@ -388,6 +456,26 @@ function setupAdminManagerUI() {
 
     if (modal && openBtn) {
         openBtn.addEventListener('click', () => {
+            // Reset to Add mode
+            const editDishIdInput = document.getElementById('editDishId');
+            const modalTitle = document.getElementById('modalTitleText');
+            const modalSubtitle = document.getElementById('modalSubtitleText');
+            const submitBtn = document.getElementById('modalSubmitBtn');
+            const form = document.getElementById('add-menu-form');
+            const imageHidden = document.getElementById('foodImageBase64');
+            const imagePreview = document.getElementById('imagePreview');
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+            if (editDishIdInput) editDishIdInput.value = '';
+            if (modalTitle) modalTitle.textContent = '+ Add New Food Item';
+            if (modalSubtitle) modalSubtitle.textContent = 'Upload a dish to SPENZA Kitchen menu. Items are saved locally and immediately available across the site.';
+            if (submitBtn) submitBtn.textContent = 'Add Menu Item';
+
+            if (form) form.reset();
+            if (imageHidden) imageHidden.value = '';
+            if (imagePreview) imagePreview.style.display = 'none';
+            if (fileNameDisplay) fileNameDisplay.textContent = 'Click to upload dish photo';
+
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
             const formAlert = document.getElementById('form-alert');
@@ -409,7 +497,7 @@ function setupAdminManagerUI() {
 }
 
 /**
- * Handle Admin Add Menu Item Form Submission
+ * Handle Admin Add/Edit Menu Item Form Submission
  */
 function setupAdminForm() {
     const form = document.getElementById('add-menu-form');
@@ -420,6 +508,7 @@ function setupAdminForm() {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        const editDishIdInput = document.getElementById('editDishId');
         const nameInput = document.getElementById('foodName');
         const descInput = document.getElementById('foodDesc');
         const priceInput = document.getElementById('foodPrice');
@@ -429,6 +518,7 @@ function setupAdminForm() {
         const imagePreview = document.getElementById('imagePreview');
         const fileNameDisplay = document.getElementById('fileNameDisplay');
 
+        const editDishId = editDishIdInput ? editDishIdInput.value.trim() : '';
         const name = nameInput.value.trim();
         const description = descInput.value.trim();
         const price = parseFloat(priceInput.value);
@@ -446,6 +536,36 @@ function setupAdminForm() {
             showAlert("Price must be a valid positive amount greater than ₹0.", "error");
             priceInput.focus();
             return;
+        }
+
+        if (editDishId) {
+            // Edit existing dish
+            const items = getMenuItems();
+            const index = items.findIndex(item => String(item.id) === String(editDishId));
+            if (index !== -1) {
+                items[index] = {
+                    ...items[index],
+                    name,
+                    description,
+                    price: Math.round(price * 100) / 100,
+                    category,
+                    tag: tag !== 'NONE' ? tag : '',
+                    image
+                };
+                saveMenuItems(items);
+                showAlert(`Dish "${name}" updated successfully!`, "success");
+                renderAdminFoodGrid(currentAdminCategory, currentAdminSearch);
+
+                setTimeout(() => {
+                    const modal = document.getElementById('add-food-modal');
+                    if (modal) {
+                        modal.classList.remove('show');
+                        document.body.style.overflow = 'auto';
+                    }
+                    showGlobalAdminAlert(`Dish "${name}" updated successfully!`, "success");
+                }, 1000);
+                return;
+            }
         }
 
         // Construct new item
@@ -469,7 +589,7 @@ function setupAdminForm() {
         if (imagePreview) imagePreview.style.display = 'none';
         if (fileNameDisplay) fileNameDisplay.textContent = 'Click to upload dish photo';
 
-        renderAdminFoodGrid();
+        renderAdminFoodGrid(currentAdminCategory, currentAdminSearch);
 
         // Close modal after 1.2s and show global alert
         setTimeout(() => {
