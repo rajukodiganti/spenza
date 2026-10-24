@@ -1,17 +1,19 @@
 /**
- * Restaurant Website - Core JavaScript
- * Handles Navigation, LocalStorage State, Menu Rendering, Filtering, and Admin Submissions.
+ * SPENZA Kitchen & Dining - Core JavaScript
+ * Handles Navigation, LocalStorage State, Menu Rendering, Filtering, Admin Authentication,
+ * Password Visibility Toggle, Image 2 Menu List Manager, and Secret 4-Tap Admin Trigger.
  */
 
 const STORAGE_KEY = 'ROYAL_MARIGOLD_MENU_ITEMS';
 
-// Initial curated menu items across all 5 categories
+// Initial curated menu items with status tags (Matching Image 2 Reference)
 const DEFAULT_MENU_ITEMS = [
     {
         id: 1,
         name: "Zafrani Paneer Tikka",
         category: "Starters",
         price: 380,
+        tag: "CHEF SPECIAL",
         description: "Charcoal-grilled cottage cheese cubes infused with royal saffron, crushed spices, and marigold cream.",
         image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=700&q=80"
     },
@@ -20,6 +22,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Murgh Malai Sheekh",
         category: "Starters",
         price: 490,
+        tag: "BESTSELLER",
         description: "Minced tender chicken skewers flavored with cardamom, white pepper, and smoked silver-leaf butter.",
         image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80"
     },
@@ -28,6 +31,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Crispy Calamari Royale",
         category: "Starters",
         price: 520,
+        tag: "NONE",
         description: "Golden fried calamari rings seasoned with crushed sea salt, lime zest, and marigold pepper relish.",
         image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=700&q=80"
     },
@@ -36,6 +40,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Dal Bukhara Gold",
         category: "Main Course",
         price: 420,
+        tag: "BESTSELLER",
         description: "Overnight slow-simmered black lentils infused with smoked butter, cream, and roasted fenugreek.",
         image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=700&q=80"
     },
@@ -44,6 +49,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Nalli Rogan Josh",
         category: "Main Course",
         price: 680,
+        tag: "CHEF SPECIAL",
         description: "Slow-cooked Kashmiri lamb shanks in an aromatic gravy of rattan jot, dried ginger, and fennel.",
         image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=700&q=80"
     },
@@ -52,6 +58,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Royal Paneer Korma",
         category: "Main Course",
         price: 460,
+        tag: "NONE",
         description: "Velvety cashew and melon seed reduction with fresh cottage cheese and hand-picked royal herbs.",
         image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=700&q=80"
     },
@@ -60,6 +67,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Awadhi Dum Gosht Biryani",
         category: "Biryani",
         price: 650,
+        tag: "BESTSELLER",
         description: "Aged long-grain basmati rice layered with succulent prime mutton, saffron broth, and seal-cooked in handi.",
         image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=700&q=80"
     },
@@ -68,6 +76,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Nizami Murgh Dum Biryani",
         category: "Biryani",
         price: 540,
+        tag: "BESTSELLER",
         description: "Fragrant spiced basmati rice slow-dum cooked with tender chicken, caramelized onions, and fresh mint.",
         image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=700&q=80"
     },
@@ -76,6 +85,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Subz Shahi Handi Biryani",
         category: "Biryani",
         price: 440,
+        tag: "NONE",
         description: "Garden-fresh vegetables and baby potatoes scented with kewra water, rose petals, and whole warm spices.",
         image: "https://images.unsplash.com/photo-1642821373181-696a54913e93?auto=format&fit=crop&w=700&q=80"
     },
@@ -84,6 +94,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Gold Leaf Shahi Tukda",
         category: "Desserts",
         price: 320,
+        tag: "CHEF SPECIAL",
         description: "Crispy ghee-fried brioche soaked in saffron cardamom rabri, garnished with edible silver vark and pistachios.",
         image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=700&q=80"
     },
@@ -92,6 +103,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Saffron Pistachio Kulfi",
         category: "Desserts",
         price: 260,
+        tag: "BESTSELLER",
         description: "Traditional dense caramelized milk frozen kulfi enriched with Kashmiri saffron and roasted nut praline.",
         image: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=700&q=80"
     },
@@ -100,6 +112,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Marigold Gold Brew",
         category: "Beverages",
         price: 240,
+        tag: "REFRESHING",
         description: "Cold-extracted artisan Arabica infused with organic marigold syrup and a hint of vanilla bean.",
         image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=700&q=80"
     },
@@ -108,6 +121,7 @@ const DEFAULT_MENU_ITEMS = [
         name: "Silver Mist Mocktail",
         category: "Beverages",
         price: 280,
+        tag: "COOLER",
         description: "Elderflower extract, fresh cucumber ribbon, lime spritz, and effervescent botanical tonic.",
         image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=80"
     }
@@ -158,7 +172,7 @@ function addMenuItem(item) {
 }
 
 /**
- * Render Menu Cards on menu.html
+ * Render Menu Cards on menu.html and index.html
  */
 function renderMenu(categoryFilter = 'All') {
     const container = document.getElementById('menu-grid');
@@ -196,7 +210,7 @@ function renderMenu(categoryFilter = 'All') {
 }
 
 /**
- * Setup category filter button listeners
+ * Setup category filter button listeners on customer menu
  */
 function setupCategoryFilters() {
     const buttons = document.querySelectorAll('.category-btn');
@@ -213,49 +227,185 @@ function setupCategoryFilters() {
 }
 
 /**
- * Render Admin Table on admin.html
+ * Helper to determine CSS class for status badges
  */
-function renderAdminTable() {
-    const tableBody = document.getElementById('admin-table-body');
-    const countBadge = document.getElementById('item-count-badge');
-    if (!tableBody) return;
+function getTagClass(tag) {
+    if (!tag) return '';
+    const lower = tag.toLowerCase();
+    if (lower.includes('bestseller')) return 'badge-bestseller';
+    if (lower.includes('refreshing')) return 'badge-refreshing';
+    if (lower.includes('cooler')) return 'badge-cooler';
+    if (lower.includes('special')) return 'badge-special';
+    return 'badge-special';
+}
+
+/**
+ * Image 2: Render Admin Food Grid
+ * Displays dishes as interactive cards with status tags, layout support, and deletion
+ */
+let currentAdminCategory = 'All';
+let currentAdminSearch = '';
+
+function renderAdminFoodGrid(filterCategory = currentAdminCategory, searchQuery = currentAdminSearch) {
+    const gridContainer = document.getElementById('admin-food-grid');
+    if (!gridContainer) return;
+
+    currentAdminCategory = filterCategory;
+    currentAdminSearch = searchQuery;
 
     const items = getMenuItems();
-    if (countBadge) {
-        countBadge.textContent = `${items.length} Items`;
-    }
+    const query = (searchQuery || '').trim().toLowerCase();
 
-    if (items.length === 0) {
-        tableBody.innerHTML = `
-            <tr>
-                <td colspan="5" style="text-align: center; padding: 2rem;">No menu items available.</td>
-            </tr>
+    const filtered = items.filter(item => {
+        const matchesCategory = filterCategory === 'All' || item.category === filterCategory;
+        const matchesSearch = !query || 
+            item.name.toLowerCase().includes(query) || 
+            item.description.toLowerCase().includes(query) ||
+            item.category.toLowerCase().includes(query) ||
+            (item.tag && item.tag.toLowerCase().includes(query));
+        return matchesCategory && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+        gridContainer.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; color: var(--sand-muted); padding: 4rem 1rem;">
+                <p style="font-size: 1.25rem; color: var(--light-sand); margin-bottom: 0.5rem;">No food dishes found</p>
+                <p style="font-size: 0.9rem;">Try selecting another category or clear your search term.</p>
+            </div>
         `;
         return;
     }
 
-    tableBody.innerHTML = items.map((item, index) => `
-        <tr>
-            <td>
-                <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" class="table-thumb" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';">
-            </td>
-            <td>
-                <strong style="color: var(--white);">${escapeHtml(item.name)}</strong>
-                <div style="font-size: 0.8rem; color: var(--silver); max-width: 280px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-                    ${escapeHtml(item.description)}
+    gridContainer.innerHTML = filtered.map(item => {
+        const tag = item.tag && item.tag !== 'NONE' ? item.tag : '';
+        const tagClass = getTagClass(tag);
+        const tagHtml = tag ? `<span class="badge-tag ${tagClass}">${escapeHtml(tag)}</span>` : '';
+
+        return `
+            <div class="admin-food-card" data-id="${item.id}">
+                <div class="admin-card-img-wrap">
+                    ${tagHtml}
+                    <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" class="admin-card-img" onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';">
                 </div>
-            </td>
-            <td>
-                <span class="table-badge">${escapeHtml(item.category)}</span>
-            </td>
-            <td>
-                <strong style="color: var(--marigold-gold);">₹${Number(item.price).toLocaleString('en-IN')}</strong>
-            </td>
-            <td style="color: var(--silver); font-size: 0.8rem;">
-                #${item.id || index + 1}
-            </td>
-        </tr>
-    `).join('');
+                <div class="admin-card-body">
+                    <span class="admin-dish-category">${escapeHtml(item.category)}</span>
+                    <div class="admin-card-head">
+                        <h3 class="admin-dish-name">${escapeHtml(item.name)}</h3>
+                        <span class="admin-dish-price">₹${Number(item.price).toLocaleString('en-IN')}</span>
+                    </div>
+                    <p class="admin-dish-desc">${escapeHtml(item.description)}</p>
+                    <div class="admin-card-foot">
+                        <span class="admin-dish-id">ID: #${item.id}</span>
+                        <button type="button" class="btn-delete-dish" data-id="${item.id}" title="Remove dish from menu">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                            </svg>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    // Attach delete button listeners
+    gridContainer.querySelectorAll('.btn-delete-dish').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = e.currentTarget.getAttribute('data-id');
+            deleteMenuItem(id);
+        });
+    });
+}
+
+/**
+ * Delete menu item from localStorage and re-render
+ */
+function deleteMenuItem(id) {
+    if (!confirm('Are you sure you want to remove this dish from the menu?')) return;
+    const items = getMenuItems();
+    const updated = items.filter(item => String(item.id) !== String(id));
+    saveMenuItems(updated);
+    renderAdminFoodGrid();
+    showGlobalAdminAlert('Dish removed successfully from the menu.', 'success');
+}
+
+/**
+ * Display alert banner in admin dashboard
+ */
+function showGlobalAdminAlert(msg, type = 'success') {
+    const alertBox = document.getElementById('admin-global-alert');
+    if (!alertBox) return;
+    alertBox.textContent = msg;
+    alertBox.className = `alert-message alert-${type}`;
+    alertBox.style.display = 'block';
+    setTimeout(() => {
+        alertBox.style.display = 'none';
+    }, 4000);
+}
+
+/**
+ * Image 2: Setup Admin Food Manager UI Handlers
+ * Handles real-time search, category tabs, layout grid selector, and add modal dialog
+ */
+function setupAdminManagerUI() {
+    // Real-time search
+    const searchInput = document.getElementById('adminSearchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            renderAdminFoodGrid(currentAdminCategory, e.target.value);
+        });
+    }
+
+    // Category filter tabs
+    const catTabs = document.querySelectorAll('.admin-cat-tab');
+    catTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            catTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const cat = tab.getAttribute('data-category');
+            renderAdminFoodGrid(cat, currentAdminSearch);
+        });
+    });
+
+    // Layout Dropdown
+    const layoutSelect = document.getElementById('adminLayoutSelect');
+    const foodGrid = document.getElementById('admin-food-grid');
+    if (layoutSelect && foodGrid) {
+        layoutSelect.addEventListener('change', () => {
+            foodGrid.classList.remove('grid-2', 'grid-3', 'grid-4');
+            const val = layoutSelect.value;
+            if (val === 'grid-2') foodGrid.classList.add('grid-2');
+            else if (val === 'grid-4') foodGrid.classList.add('grid-4');
+            else foodGrid.classList.add('grid-3');
+        });
+    }
+
+    // Add Food Modal Open / Close
+    const modal = document.getElementById('add-food-modal');
+    const openBtn = document.getElementById('openAddDishModalBtn');
+    const closeBtn = document.getElementById('closeAddFoodModalBtn');
+    const cancelBtn = document.getElementById('cancelAddFoodBtn');
+
+    if (modal && openBtn) {
+        openBtn.addEventListener('click', () => {
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            const formAlert = document.getElementById('form-alert');
+            if (formAlert) formAlert.style.display = 'none';
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        };
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    }
 }
 
 /**
@@ -274,6 +424,7 @@ function setupAdminForm() {
         const descInput = document.getElementById('foodDesc');
         const priceInput = document.getElementById('foodPrice');
         const categoryInput = document.getElementById('foodCategory');
+        const tagInput = document.getElementById('foodTag');
         const imageHidden = document.getElementById('foodImageBase64');
         const imagePreview = document.getElementById('imagePreview');
         const fileNameDisplay = document.getElementById('fileNameDisplay');
@@ -282,6 +433,7 @@ function setupAdminForm() {
         const description = descInput.value.trim();
         const price = parseFloat(priceInput.value);
         const category = categoryInput.value;
+        const tag = tagInput ? tagInput.value : 'NONE';
         const image = imageHidden ? imageHidden.value : '';
 
         // Validation
@@ -303,6 +455,7 @@ function setupAdminForm() {
             description,
             price: Math.round(price * 100) / 100,
             category,
+            tag: tag !== 'NONE' ? tag : '',
             image
         };
 
@@ -315,7 +468,18 @@ function setupAdminForm() {
         if (imageHidden) imageHidden.value = '';
         if (imagePreview) imagePreview.style.display = 'none';
         if (fileNameDisplay) fileNameDisplay.textContent = 'Click to upload dish photo';
-        renderAdminTable();
+
+        renderAdminFoodGrid();
+
+        // Close modal after 1.2s and show global alert
+        setTimeout(() => {
+            const modal = document.getElementById('add-food-modal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+            showGlobalAdminAlert(`Dish "${name}" added to menu!`, "success");
+        }, 1200);
     });
 
     function showAlert(message, type) {
@@ -368,6 +532,30 @@ function setupImageUpload() {
 }
 
 /**
+ * Password Visibility Toggle
+ */
+function setupPasswordToggle() {
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+    const passwordInput = document.getElementById('adminPassword');
+    const eyeOpen = document.getElementById('eyeIconOpen');
+    const eyeClosed = document.getElementById('eyeIconClosed');
+
+    if (!toggleBtn || !passwordInput) return;
+
+    toggleBtn.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            if (eyeOpen) eyeOpen.style.display = 'none';
+            if (eyeClosed) eyeClosed.style.display = 'inline-block';
+        } else {
+            passwordInput.type = 'password';
+            if (eyeOpen) eyeOpen.style.display = 'inline-block';
+            if (eyeClosed) eyeClosed.style.display = 'none';
+        }
+    });
+}
+
+/**
  * Mobile navigation menu toggle
  */
 function setupMobileMenu() {
@@ -411,7 +599,7 @@ function checkAdminAuth() {
     if (isAuthenticated) {
         loginView.style.display = 'none';
         dashboardView.style.display = 'block';
-        renderAdminTable();
+        renderAdminFoodGrid();
     } else {
         loginView.style.display = 'block';
         dashboardView.style.display = 'none';
@@ -520,7 +708,6 @@ function setupScrollEffects() {
 
     window.addEventListener('scroll', updateActiveNav, { passive: true });
     window.addEventListener('resize', updateActiveNav);
-    // Initial run on page load
     updateActiveNav();
 
     // Instant click feedback
@@ -549,7 +736,6 @@ function setupScrollEffects() {
 
         revealElements.forEach(el => observer.observe(el));
     } else {
-        // Fallback for browsers without IntersectionObserver
         revealElements.forEach(el => el.classList.add('active'));
     }
 }
@@ -654,8 +840,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (document.getElementById('admin-login-view')) {
+        setupPasswordToggle();
         setupAdminAuth();
         checkAdminAuth();
+        setupAdminManagerUI();
         setupAdminForm();
         setupImageUpload();
     }
