@@ -200,10 +200,10 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Clean Footer (Matching Image 1 Instructions) -->
     <footer class="site-footer">
         <div class="container">
-            <div class="footer-grid">
+            <div class="footer-grid-clean">
                 <div class="footer-col">
                     <div class="brand-logo" style="margin-bottom: 0.8rem;">
                         <img src="logo.png" alt="SPENZA Logo" class="brand-logo-img">
@@ -232,33 +232,42 @@
                         <li><a href="index.html#about">About Us</a></li>
                         <li><a href="index.html#menu">Full Menu</a></li>
                         <li><a href="index.html#reach-us">Reach Us</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>DevOps Lab</h4>
-                    <ul class="footer-links">
-                        <li><a href="admin.html">Admin Portal</a></li>
-                        <li><span style="color: var(--sand-muted);">Dockerized App</span></li>
-                        <li><span style="color: var(--sand-muted);">CI/CD Jenkins</span></li>
-                        <li><span style="color: var(--sand-muted);">Git Version Control</span></li>
+                        <li><a href="#" class="open-privacy-btn">Privacy Policy</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
                     <h4>Operating Hours</h4>
                     <p style="margin-bottom: 0.4rem;"><strong class="sand-text">Open All Week:</strong></p>
-                    <p style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--white); font-weight: 700;">12:00 PM – 12:00 AM</p>
+                    <p style="margin-bottom: 0.5rem; font-size: 1.15rem; color: var(--white); font-weight: 700;">12:00 PM – 12:00 AM</p>
                     <p><span class="silver-text">Monday through Sunday</span></p>
                 </div>
             </div>
 
-            <div class="footer-bottom">
+            <div class="footer-bottom-clean">
                 <p>&copy; 2024 SPENZA Kitchen &amp; Dining. All Rights Reserved.</p>
-                <p class="silver-text">College DevOps Project &bull; Nginx &bull; Docker &bull; Jenkins</p>
+                <p>
+                    <a href="#" class="open-privacy-btn">Privacy Policy</a> &bull; 
+                    <a href="admin.html">Admin Access</a>
+                </p>
             </div>
         </div>
     </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-policy-modal" class="privacy-modal">
+        <div class="privacy-modal-content">
+            <button class="privacy-modal-close" aria-label="Close modal">&times;</button>
+            <h2>Privacy Policy</h2>
+            <p style="font-size: 0.85rem; color: var(--sand-gold); margin-bottom: 1.5rem;">Last Updated: October 2024</p>
+            <h3>1. Commitment to Privacy</h3>
+            <p>At SPENZA Kitchen &amp; Dining, we respect your privacy and are committed to safeguarding any guest information provided during table bookings, inquiries, or hospitality experiences.</p>
+            <h3>2. Reservation Data</h3>
+            <p>When you contact us for table reservations or culinary events, details such as guest name, contact number, and party preferences are used solely to confirm your dining reservation and ensure exceptional service.</p>
+            <h3>3. Contact &amp; Inquiries</h3>
+            <p>For any privacy questions or reservation updates, please call our direct concierge line at <strong class="sand-text">+91 832 859 4373</strong>.</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

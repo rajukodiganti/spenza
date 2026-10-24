@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <!-- Sticky Navigation Bar -->
+    <!-- Sticky Navigation Bar (Matching Image 2 Reference) -->
     <header class="site-header">
         <div class="container nav-container">
             <a href="#home" class="brand-logo">
@@ -30,40 +30,58 @@
 
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#home" class="active">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#about">Our Story</a></li>
                     <li><a href="#menu">Menu</a></li>
                     <li><a href="#reach-us">Reach Us</a></li>
-                    <li><a href="admin.html" class="admin-nav-link">Admin</a></li>
                 </ul>
             </nav>
+
+            <div class="nav-right-actions">
+                <a href="tel:+918328594373" class="nav-cta-btn">Reserve Table</a>
+            </div>
         </div>
     </header>
 
     <!-- Main Single Page Down-Scrolling Content -->
     <main>
-        <!-- 1. Hero Section with Real Restaurant Interior Background -->
+        <!-- ========================================================
+             1. HERO SECTION (EXACT LAYOUT FROM IMAGE 2 MOCKUP)
+        ======================================================== -->
         <section id="home" class="hero-section">
-            <div class="container">
-                <div class="hero-content-centered">
-                    <img src="logo.png" alt="SPENZA Kitchen &amp; Dining Emblem" class="hero-emblem-badge">
-                    <span class="hero-badge">Crafted for the Finest Tastes.</span>
-                    <h1 class="hero-title">An Experience Beyond Taste.</h1>
+            <div class="container" style="position: relative; width: 100%;">
+                <div class="hero-editorial-wrap">
+                    <div class="hero-kicker">Crafted for the Finest Tastes</div>
+                    <h1 class="hero-title">
+                        Where Tradition<br>Meets <span class="hero-italic-art">Artistry</span>
+                    </h1>
                     <p class="hero-desc">
-                        Welcome to <strong class="sand-text">SPENZA Kitchen &amp; Dining</strong>. Immerse yourself in an opulent dining atmosphere where centuries-old culinary heritage 
-                        meets contemporary poise. Prepared with the finest ingredients and served with unmatched elegance.
+                        Every dish tells a story. Every meal is a memory. Experience the authentic royal culinary heritage of SPENZA, reimagined for modern connoisseurs.
                     </p>
-                    <div class="hero-actions" style="display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center;">
-                        <a href="#menu" class="btn btn-wine">Explore Menu</a>
-                        <a href="#about" class="btn btn-outline-sand">Our Story</a>
-                        <a href="tel:+918328594373" class="btn btn-outline-sand">Call: +91 832 859 4373</a>
+                    <div class="hero-cta-group">
+                        <a href="tel:+918328594373" class="btn btn-sand-solid">Reserve Your Table</a>
+                        <a href="#menu" class="btn btn-dark-outline">Explore Menu</a>
                     </div>
                 </div>
+
+                <!-- Google Rating Badge (Bottom Right of Image 2) -->
+                <div class="hero-rating-box">
+                    <span class="rating-number">4.9</span>
+                    <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <span class="rating-text">Google Rating</span>
+                </div>
+
+                <!-- Animated Scroll Indicator (Bottom Center of Image 2) -->
+                <a href="#about" class="hero-scroll-tag" aria-label="Scroll down to About Us">
+                    <span>Scroll</span>
+                    <span class="scroll-arrow">&#8595;</span>
+                </a>
             </div>
         </section>
 
-        <!-- 2. About Us Section -->
-        <section id="about" class="about-section">
+        <!-- ========================================================
+             2. OUR STORY / ABOUT US SECTION
+        ======================================================== -->
+        <section id="about" class="about-section reveal">
             <div class="container">
                 <div class="section-title-wrap">
                     <span class="section-subtitle">Crafted for the Finest Tastes</span>
@@ -76,7 +94,7 @@
                         <p class="about-para">
                             Founded with an enduring dedication to culinary excellence, <strong class="sand-text">SPENZA Kitchen &amp; Dining</strong> 
                             redefines fine dining through an exquisite union of regal spice blends, slow-cooking techniques, and contemporary refinement. 
-                            Guided by our philosophy &mdash; <em class="wine-text">&ldquo;Crafted for the Finest Tastes&rdquo;</em> &mdash; every recipe honours time-tested traditions, bringing royal banquets to life with contemporary poise.
+                            Guided by our philosophy &mdash; <em class="wine-text">&ldquo;Crafted for the Finest Tastes&rdquo;</em> &mdash; every recipe honours time-tested culinary traditions, bringing royal banquets to life with modern poise.
                         </p>
                         <p class="about-para">
                             Our dining hall is designed to engage all the senses. From our signature warm backlights and handcrafted wood furnishings 
@@ -112,8 +130,10 @@
             </div>
         </section>
 
-        <!-- 3. Curated Menu Section (All Food Items Belong Here) -->
-        <section id="menu" class="menu-section">
+        <!-- ========================================================
+             3. CURATED MENU SECTION (ALL DISHES LIVE HERE)
+        ======================================================== -->
+        <section id="menu" class="menu-section reveal">
             <div class="container">
                 <div class="section-title-wrap">
                     <span class="section-subtitle">Gastronomic Selection</span>
@@ -133,15 +153,17 @@
                     <button class="category-btn" data-category="Beverages">Beverages</button>
                 </div>
 
-                <!-- Dynamic Menu Grid Container -->
+                <!-- Dynamic Menu Grid Container (populated by script.js) -->
                 <div class="menu-grid" id="menu-grid">
-                    <!-- Rendered dynamically by script.js -->
+                    <!-- Javascript will render cards here -->
                 </div>
             </div>
         </section>
 
-        <!-- 4. Reach Us Section -->
-        <section id="reach-us" class="reach-us-section">
+        <!-- ========================================================
+             4. REACH US SECTION (REMOVED DIRECT CORRESPONDENCE)
+        ======================================================== -->
+        <section id="reach-us" class="reach-us-section reveal">
             <div class="container">
                 <div class="section-title-wrap">
                     <span class="section-subtitle">Crafted for the Finest Tastes</span>
@@ -201,20 +223,6 @@
                                 <p>Near Central Gateway, New Delhi, 110001, India</p>
                             </div>
                         </div>
-
-                        <!-- Email -->
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                                </svg>
-                            </div>
-                            <div class="contact-details">
-                                <h3>Direct Correspondence</h3>
-                                <p><a href="mailto:concierge@spenzadining.com">concierge@spenzadining.com</a></p>
-                                <p><a href="mailto:events@spenzadining.com">events@spenzadining.com</a></p>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Map Embed & Directions -->
@@ -243,10 +251,13 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- ========================================================
+         5. CLEAN FOOTER (MATCHING IMAGE 1 INSTRUCTIONS)
+    ======================================================== -->
     <footer class="site-footer">
         <div class="container">
-            <div class="footer-grid">
+            <div class="footer-grid-clean">
+                <!-- Col 1: Brand Info -->
                 <div class="footer-col">
                     <div class="brand-logo" style="margin-bottom: 0.8rem;">
                         <img src="logo.png" alt="SPENZA Logo" class="brand-logo-img">
@@ -268,6 +279,7 @@
                     </p>
                 </div>
 
+                <!-- Col 2: Quick Links (Single Page In-Page Scroll + Privacy Policy) -->
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <ul class="footer-links">
@@ -275,33 +287,50 @@
                         <li><a href="#about">About Us</a></li>
                         <li><a href="#menu">Full Menu</a></li>
                         <li><a href="#reach-us">Reach Us</a></li>
+                        <li><a href="#" class="open-privacy-btn">Privacy Policy</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-col">
-                    <h4>DevOps Lab</h4>
-                    <ul class="footer-links">
-                        <li><a href="admin.html">Admin Portal</a></li>
-                        <li><span style="color: var(--sand-muted);">Dockerized App</span></li>
-                        <li><span style="color: var(--sand-muted);">CI/CD Jenkins</span></li>
-                        <li><span style="color: var(--sand-muted);">Git Version Control</span></li>
-                    </ul>
-                </div>
-
+                <!-- Col 3: Operating Hours -->
                 <div class="footer-col">
                     <h4>Operating Hours</h4>
                     <p style="margin-bottom: 0.4rem;"><strong class="sand-text">Open All Week:</strong></p>
-                    <p style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--white); font-weight: 700;">12:00 PM – 12:00 AM</p>
+                    <p style="margin-bottom: 0.5rem; font-size: 1.15rem; color: var(--white); font-weight: 700;">12:00 PM – 12:00 AM</p>
                     <p><span class="silver-text">Monday through Sunday</span></p>
                 </div>
             </div>
 
-            <div class="footer-bottom">
+            <!-- Footer Bottom: Clean without DevOps notes, with Privacy Policy -->
+            <div class="footer-bottom-clean">
                 <p>&copy; 2024 SPENZA Kitchen &amp; Dining. All Rights Reserved.</p>
-                <p class="silver-text">College DevOps Project &bull; Nginx &bull; Docker &bull; Jenkins</p>
+                <p>
+                    <a href="#" class="open-privacy-btn">Privacy Policy</a> &bull; 
+                    <a href="admin.html">Admin Access</a>
+                </p>
             </div>
         </div>
     </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-policy-modal" class="privacy-modal">
+        <div class="privacy-modal-content">
+            <button class="privacy-modal-close" aria-label="Close modal">&times;</button>
+            <h2>Privacy Policy</h2>
+            <p style="font-size: 0.85rem; color: var(--sand-gold); margin-bottom: 1.5rem;">Last Updated: October 2024</p>
+
+            <h3>1. Commitment to Privacy</h3>
+            <p>At SPENZA Kitchen &amp; Dining, we respect your privacy and are committed to safeguarding any guest information provided during table bookings, inquiries, or hospitality experiences.</p>
+
+            <h3>2. Reservation Data</h3>
+            <p>When you contact us for table reservations or culinary events, details such as guest name, contact number, and party preferences are used solely to confirm your dining reservation and ensure exceptional service.</p>
+
+            <h3>3. Local Browser Storage</h3>
+            <p>Our website utilizes local browser session mechanisms to maintain menu filters and administrative demonstrations offline without tracking your personal browsing habits or selling data to third parties.</p>
+
+            <h3>4. Contact &amp; Inquiries</h3>
+            <p>For any privacy questions or reservation updates, please call our direct concierge line at <strong class="sand-text">+91 832 859 4373</strong>.</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

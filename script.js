@@ -454,6 +454,99 @@ function setupAdminAuth() {
 }
 
 /**
+ * Setup Scroll Animations and Active Navigation Spy
+ */
+function setupScrollEffects() {
+    const header = document.querySelector('.site-header');
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    // Header scroll background toggle & Active Nav Spy
+    window.addEventListener('scroll', () => {
+        const scrollY = window.pageYOffset;
+
+        if (header) {
+            if (scrollY > 60) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+
+        // Active link spy
+        sections.forEach(current => {
+            const sectionHeight = current.offsetHeight;
+            const sectionTop = current.offsetTop - 120;
+            const sectionId = current.getAttribute('id');
+
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+
+    // IntersectionObserver for smooth scroll reveals
+    const revealElements = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && revealElements.length > 0) {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+    } else {
+        // Fallback for browsers without IntersectionObserver
+        revealElements.forEach(el => el.classList.add('active'));
+    }
+}
+
+/**
+ * Setup Privacy Policy Modal
+ */
+function setupPrivacyModal() {
+    const modal = document.getElementById('privacy-policy-modal');
+    const openBtns = document.querySelectorAll('.open-privacy-btn');
+    const closeBtn = document.querySelector('.privacy-modal-close');
+
+    if (!modal) return;
+
+    openBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        });
+    }
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+    });
+}
+
+/**
  * Escape HTML to prevent XSS injection
  */
 function escapeHtml(string) {
@@ -469,6 +562,8 @@ function escapeHtml(string) {
 // Global initialization on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     setupMobileMenu();
+    setupScrollEffects();
+    setupPrivacyModal();
 
     // Check which page we are on and initialize accordingly
     if (document.getElementById('menu-grid')) {
