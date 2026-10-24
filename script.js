@@ -361,6 +361,76 @@ function setupMobileMenu() {
 }
 
 /**
+ * Admin Authentication Credentials
+ */
+const AUTH_KEY = 'ROYAL_MARIGOLD_ADMIN_AUTH';
+const ADMIN_USER = 'spenza';
+const ADMIN_PASS = 'spenza123';
+
+/**
+ * Check admin authentication state and toggle views
+ */
+function checkAdminAuth() {
+    const loginView = document.getElementById('admin-login-view');
+    const dashboardView = document.getElementById('admin-dashboard-view');
+    if (!loginView || !dashboardView) return;
+
+    const isAuthenticated = sessionStorage.getItem(AUTH_KEY) === 'true';
+
+    if (isAuthenticated) {
+        loginView.style.display = 'none';
+        dashboardView.style.display = 'block';
+        renderAdminTable();
+    } else {
+        loginView.style.display = 'block';
+        dashboardView.style.display = 'none';
+    }
+}
+
+/**
+ * Setup Admin Login and Logout Handlers
+ */
+function setupAdminAuth() {
+    const loginForm = document.getElementById('admin-login-form');
+    const logoutBtn = document.getElementById('admin-logout-btn');
+    const loginAlert = document.getElementById('login-alert');
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const usernameInput = document.getElementById('adminUsername');
+            const passwordInput = document.getElementById('adminPassword');
+
+            const username = usernameInput ? usernameInput.value.trim() : '';
+            const password = passwordInput ? passwordInput.value : '';
+
+            if (username === ADMIN_USER && password === ADMIN_PASS) {
+                sessionStorage.setItem(AUTH_KEY, 'true');
+                if (loginAlert) {
+                    loginAlert.style.display = 'none';
+                }
+                loginForm.reset();
+                checkAdminAuth();
+            } else {
+                if (loginAlert) {
+                    loginAlert.textContent = 'Invalid username or password. Please try again.';
+                    loginAlert.className = 'alert-message alert-error';
+                    loginAlert.style.display = 'block';
+                }
+            }
+        });
+    }
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function () {
+            sessionStorage.removeItem(AUTH_KEY);
+            checkAdminAuth();
+        });
+    }
+}
+
+/**
  * Escape HTML to prevent XSS injection
  */
 function escapeHtml(string) {
@@ -383,8 +453,9 @@ document.addEventListener('DOMContentLoaded', () => {
         setupCategoryFilters();
     }
 
-    if (document.getElementById('add-menu-form')) {
-        renderAdminTable();
+    if (document.getElementById('admin-login-view')) {
+        setupAdminAuth();
+        checkAdminAuth();
         setupAdminForm();
         setupImagePresets();
     }

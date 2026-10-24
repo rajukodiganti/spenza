@@ -49,99 +49,145 @@
                     </p>
                 </div>
 
-                <!-- Demonstration Notice Banner -->
-                <div class="admin-demo-alert">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
-                    <div>
-                        <strong class="gold-text">Academic Demonstration Notice:</strong> 
-                        This admin portal is a frontend demonstration designed for a DevOps CI/CD pipeline showcase. 
-                        Data is persisted locally in browser <code>localStorage</code> without a backend database. 
-                        It is not secured with backend authentication and is not intended for public production deployment.
-                    </div>
-                </div>
+                <!-- Admin Login View (Shown when not authenticated) -->
+                <div id="admin-login-view" class="admin-login-wrapper">
+                    <div class="admin-login-card">
+                        <div class="admin-login-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                            </svg>
+                        </div>
+                        <h2>Admin Authentication</h2>
+                        <p>Please enter your credentials to access the kitchen management portal.</p>
 
-                <div class="admin-grid">
-                    <!-- Add Menu Item Form -->
-                    <div class="admin-card">
-                        <h2 class="admin-card-title">Add New Dish</h2>
+                        <!-- Login error / info alert -->
+                        <div id="login-alert" class="alert-message"></div>
 
-                        <!-- Alert Box for Success/Error -->
-                        <div id="form-alert" class="alert-message"></div>
-
-                        <form id="add-menu-form" novalidate>
+                        <form id="admin-login-form" style="text-align: left;">
                             <div class="form-group">
-                                <label for="foodName">Food Item Name *</label>
-                                <input type="text" id="foodName" class="form-control" placeholder="e.g. Shahi Kesar Kebab" required>
+                                <label for="adminUsername">Username</label>
+                                <input type="text" id="adminUsername" class="form-control" placeholder="Enter username" autocomplete="username" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="foodCategory">Category *</label>
-                                <select id="foodCategory" class="form-control" required>
-                                    <option value="" disabled selected>Select a Category</option>
-                                    <option value="Starters">Starters</option>
-                                    <option value="Main Course">Main Course</option>
-                                    <option value="Biryani">Biryani</option>
-                                    <option value="Desserts">Desserts</option>
-                                    <option value="Beverages">Beverages</option>
-                                </select>
+                                <label for="adminPassword">Password</label>
+                                <input type="password" id="adminPassword" class="form-control" placeholder="Enter password" autocomplete="current-password" required>
                             </div>
 
-                            <div class="form-group">
-                                <label for="foodPrice">Price in Indian Rupees (₹) *</label>
-                                <input type="number" id="foodPrice" class="form-control" placeholder="e.g. 450" min="1" step="any" required>
-                                <p class="helper-text">Must be a valid positive amount.</p>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="foodDesc">Short Description *</label>
-                                <textarea id="foodDesc" class="form-control" rows="3" placeholder="Describe the ingredients, preparation, and flavor profile..." required></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="foodImage">Food Image URL *</label>
-                                <input type="url" id="foodImage" class="form-control" placeholder="https://images.unsplash.com/..." required>
-                                <p class="helper-text">Paste an image link or click a sample preset below:</p>
-                                <div class="quick-image-chips">
-                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80">Tikka Preset</span>
-                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=700&q=80">Biryani Preset</span>
-                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=700&q=80">Curry Preset</span>
-                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=700&q=80">Dessert Preset</span>
-                                    <span class="image-chip" data-url="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=700&q=80">Drink Preset</span>
-                                </div>
-                            </div>
-
-                            <div style="margin-top: 2rem;">
-                                <button type="submit" class="btn btn-gold" style="width: 100%;">Add Menu Item</button>
+                            <div style="margin-top: 1.5rem;">
+                                <button type="submit" class="btn btn-gold" style="width: 100%;">Login to Admin</button>
                             </div>
                         </form>
                     </div>
+                </div>
 
-                    <!-- Existing Menu Items List -->
-                    <div class="admin-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(192, 192, 192, 0.15); padding-bottom: 0.8rem;">
-                            <h2 style="color: var(--white); font-size: 1.4rem; margin: 0;">Existing Menu Items</h2>
-                            <span id="item-count-badge" class="table-badge" style="border-color: var(--marigold-gold); color: var(--marigold-gold);">
-                                0 Items
-                            </span>
+                <!-- Admin Dashboard View (Shown when authenticated) -->
+                <div id="admin-dashboard-view" style="display: none;">
+                    <!-- Admin Top Bar with user info & logout -->
+                    <div class="admin-top-bar">
+                        <div class="admin-user-info">
+                            <span>Logged in as:</span>
+                            <span class="admin-user-badge">spenza</span>
+                        </div>
+                        <button type="button" id="admin-logout-btn" class="btn btn-outline-silver" style="padding: 0.45rem 1.2rem; font-size: 0.85rem;">
+                            Logout
+                        </button>
+                    </div>
+
+                    <!-- Demonstration Notice Banner -->
+                    <div class="admin-demo-alert">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        <div>
+                            <strong class="gold-text">Academic Demonstration Notice:</strong> 
+                            This admin portal is a frontend demonstration designed for a DevOps CI/CD pipeline showcase. 
+                            Data is persisted locally in browser <code>localStorage</code> without a backend database. 
+                            It is not secured with backend authentication and is not intended for public production deployment.
+                        </div>
+                    </div>
+
+                    <div class="admin-grid">
+                        <!-- Add Menu Item Form -->
+                        <div class="admin-card">
+                            <h2 class="admin-card-title">Add New Dish</h2>
+
+                            <!-- Alert Box for Success/Error -->
+                            <div id="form-alert" class="alert-message"></div>
+
+                            <form id="add-menu-form" novalidate>
+                                <div class="form-group">
+                                    <label for="foodName">Food Item Name *</label>
+                                    <input type="text" id="foodName" class="form-control" placeholder="e.g. Shahi Kesar Kebab" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="foodCategory">Category *</label>
+                                    <select id="foodCategory" class="form-control" required>
+                                        <option value="" disabled selected>Select a Category</option>
+                                        <option value="Starters">Starters</option>
+                                        <option value="Main Course">Main Course</option>
+                                        <option value="Biryani">Biryani</option>
+                                        <option value="Desserts">Desserts</option>
+                                        <option value="Beverages">Beverages</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="foodPrice">Price in Indian Rupees (₹) *</label>
+                                    <input type="number" id="foodPrice" class="form-control" placeholder="e.g. 450" min="1" step="any" required>
+                                    <p class="helper-text">Must be a valid positive amount.</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="foodDesc">Short Description *</label>
+                                    <textarea id="foodDesc" class="form-control" rows="3" placeholder="Describe the ingredients, preparation, and flavor profile..." required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="foodImage">Food Image URL *</label>
+                                    <input type="url" id="foodImage" class="form-control" placeholder="https://images.unsplash.com/..." required>
+                                    <p class="helper-text">Paste an image link or click a sample preset below:</p>
+                                    <div class="quick-image-chips">
+                                        <span class="image-chip" data-url="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80">Tikka Preset</span>
+                                        <span class="image-chip" data-url="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=700&q=80">Biryani Preset</span>
+                                        <span class="image-chip" data-url="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=700&q=80">Curry Preset</span>
+                                        <span class="image-chip" data-url="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=700&q=80">Dessert Preset</span>
+                                        <span class="image-chip" data-url="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=700&q=80">Drink Preset</span>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 2rem;">
+                                    <button type="submit" class="btn btn-gold" style="width: 100%;">Add Menu Item</button>
+                                </div>
+                            </form>
                         </div>
 
-                        <div class="table-responsive">
-                            <table class="admin-table">
-                                <thead>
-                                    <tr>
-                                        <th>Dish</th>
-                                        <th>Details</th>
-                                        <th>Category</th>
-                                        <th>Price</th>
-                                        <th>ID</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="admin-table-body">
-                                    <!-- Rendered dynamically by script.js -->
-                                </tbody>
-                            </table>
+                        <!-- Existing Menu Items List -->
+                        <div class="admin-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(192, 192, 192, 0.15); padding-bottom: 0.8rem;">
+                                <h2 style="color: var(--white); font-size: 1.4rem; margin: 0;">Existing Menu Items</h2>
+                                <span id="item-count-badge" class="table-badge" style="border-color: var(--marigold-gold); color: var(--marigold-gold);">
+                                    0 Items
+                                </span>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Dish</th>
+                                            <th>Details</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="admin-table-body">
+                                        <!-- Rendered dynamically by script.js -->
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

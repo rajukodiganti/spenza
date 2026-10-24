@@ -714,6 +714,80 @@ h1, h2, h3, h4, .brand-logo {
     background-color: var(--primary-black);
 }
 
+/* Admin Login Card */
+.admin-login-wrapper {
+    max-width: 440px;
+    margin: 1.5rem auto 3rem;
+}
+
+.admin-login-card {
+    background-color: var(--secondary-black);
+    border: 1px solid rgba(234, 174, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), var(--gold-glow);
+    border-radius: 8px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+
+.admin-login-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(234, 174, 0, 0.1);
+    border: 1px solid var(--marigold-gold);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--marigold-gold);
+    margin-bottom: 1.2rem;
+}
+
+.admin-login-icon svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+}
+
+.admin-login-card h2 {
+    color: var(--white);
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-login-card p {
+    color: var(--silver);
+    font-size: 0.9rem;
+    margin-bottom: 1.8rem;
+}
+
+.admin-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--secondary-black);
+    border: var(--border-subtle);
+    border-radius: 6px;
+    padding: 0.8rem 1.4rem;
+    margin-bottom: 2rem;
+}
+
+.admin-user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--silver);
+    font-size: 0.92rem;
+}
+
+.admin-user-badge {
+    background-color: rgba(234, 174, 0, 0.15);
+    color: var(--marigold-gold);
+    border: 1px solid var(--marigold-gold);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
 .admin-demo-alert {
     background: rgba(234, 174, 0, 0.08);
     border: 1px solid var(--marigold-gold);

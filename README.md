@@ -186,12 +186,15 @@ flowchart LR
 
 ---
 
-## 9. Admin Panel Note (DevOps Demonstration)
+## 9. Admin Panel Authentication & Management
 
-* The **Admin Panel** (`admin.html`) is designed exclusively as a **frontend demonstration** for the DevOps curriculum.
-* Food items added through the admin form are persisted into the browser's `localStorage` and dynamically appended to the menu items array.
+* **Login Protection**: Access to the Admin Dashboard is protected with credentials:
+  * **Username**: `spenza`
+  * **Password**: `spenza123`
+* Once authenticated, session state is preserved in browser `sessionStorage`, and an elegant **Logout** option is provided in the top bar.
+* **Add Menu Items**: Food items added through the admin form are persisted into the browser's `localStorage` and dynamically appended to the menu items array.
 * Newly added items automatically reflect in both the Admin listing table and the main `menu.html` page under their designated category.
-* **Security Notice**: This demonstration does not include server-side authentication, role authorization, or an SQL/NoSQL backend database. It must not be deployed as-is for public production environments requiring secure data handling.
+* **Demonstration Notice**: This demonstration is built for a college DevOps curriculum. In a real-world enterprise production deployment, credentials and authentication would be validated by a backend service (e.g. JWT/OAuth/database) rather than frontend logic.
 
 ---
 
