@@ -592,6 +592,80 @@ h1, h2, h3, h4, .brand-logo {
     border-bottom: var(--border-subtle);
 }
 
+/* Customer Menu Search Bar */
+.menu-search-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: -1.2rem auto 2.5rem;
+    width: 100%;
+    max-width: 580px;
+    padding: 0 1rem;
+}
+
+.menu-search-box {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: rgba(22, 22, 22, 0.92);
+    border: 1px solid rgba(234, 174, 0, 0.35);
+    border-radius: 35px;
+    padding: 0.25rem 1.3rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+    transition: all 0.3s ease;
+}
+
+.menu-search-box:focus-within {
+    border-color: #EAAE00;
+    box-shadow: 0 0 16px rgba(234, 174, 0, 0.35), 0 4px 20px rgba(0, 0, 0, 0.6);
+    background-color: rgba(26, 26, 26, 0.98);
+}
+
+.menu-search-icon {
+    color: #EAAE00;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.menu-search-box:focus-within .menu-search-icon {
+    transform: scale(1.1);
+}
+
+.menu-search-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 0.96rem;
+    padding: 0.65rem 0;
+    outline: none;
+}
+
+.menu-search-input::placeholder {
+    color: var(--sand-muted);
+    font-size: 0.92rem;
+}
+
+.menu-search-clear-btn {
+    background: transparent;
+    border: none;
+    color: var(--sand-muted);
+    font-size: 1.35rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.2rem 0.5rem;
+    margin-left: 0.4rem;
+    border-radius: 50%;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.menu-search-clear-btn:hover {
+    color: #EAAE00;
+    transform: scale(1.15);
+}
+
 .category-filter-bar {
     display: flex;
     justify-content: center;

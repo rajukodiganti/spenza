@@ -255,11 +255,11 @@ function renderAllCategoryUI(selectedCategory) {
         }
     }
 
-    // 3. Customer Website Category Tabs (.category-tabs)
-    const customerTabs = document.querySelector('.category-tabs');
+    // 3. Customer Website Category Tabs (.category-filter-bar or .category-tabs)
+    const customerTabs = document.querySelector('.category-filter-bar') || document.querySelector('.category-tabs');
     if (customerTabs) {
         customerTabs.innerHTML = `
-            <button class="category-btn ${currentCustomerCategory === 'All' ? 'active' : ''}" data-category="All">All Items</button>
+            <button class="category-btn ${currentCustomerCategory === 'All' ? 'active' : ''}" data-category="All">All</button>
             ${categories.map(c => `
                 <button class="category-btn ${currentCustomerCategory === c ? 'active' : ''}" data-category="${escapeHtml(c)}">${escapeHtml(c)}</button>
             `).join('')}
@@ -309,24 +309,40 @@ function addMenuItem(item) {
     saveMenuItems(items);
 }
 
+let currentCustomerSearch = '';
+
 /**
- * Render Menu Cards on menu.html and index.html
+ * Render Menu Cards on menu.html and index.html (supports Category filter + Live Search)
  */
-function renderMenu(categoryFilter = currentCustomerCategory) {
+function renderMenu(categoryFilter = currentCustomerCategory, searchQuery = currentCustomerSearch) {
     const container = document.getElementById('menu-grid');
     if (!container) return;
 
     currentCustomerCategory = categoryFilter;
+    currentCustomerSearch = searchQuery;
+
     const items = getMenuItems();
-    const filteredItems = categoryFilter === 'All' 
-        ? items 
-        : items.filter(item => item.category.toLowerCase() === categoryFilter.toLowerCase());
+    const query = (searchQuery || '').trim().toLowerCase();
+
+    const filteredItems = items.filter(item => {
+        const matchesCategory = categoryFilter === 'All' || item.category.toLowerCase() === categoryFilter.toLowerCase();
+        const matchesSearch = !query ||
+            item.name.toLowerCase().includes(query) ||
+            item.description.toLowerCase().includes(query) ||
+            item.category.toLowerCase().includes(query) ||
+            (item.tag && item.tag.toLowerCase().includes(query));
+        return matchesCategory && matchesSearch;
+    });
 
     if (filteredItems.length === 0) {
+        const msg = query 
+            ? `No culinary dishes found matching &ldquo;<strong>${escapeHtml(query)}</strong>&rdquo;${categoryFilter !== 'All' ? ` in <strong>${escapeHtml(categoryFilter)}</strong>` : ''}.`
+            : `No dishes found under <strong>${escapeHtml(categoryFilter)}</strong>.`;
+
         container.innerHTML = `
             <div class="empty-menu-msg" style="grid-column: 1/-1; text-align: center; color: var(--sand-muted); padding: 3.5rem 1rem;">
-                <p style="font-size: 1.25rem; color: var(--light-sand); margin-bottom: 0.5rem;">No dishes found under <strong>${escapeHtml(categoryFilter)}</strong></p>
-                <p style="font-size: 0.9rem;">Please choose another culinary category above.</p>
+                <p style="font-size: 1.25rem; color: var(--light-sand); margin-bottom: 0.5rem;">${msg}</p>
+                <p style="font-size: 0.9rem;">Try clearing your search keyword or selecting another category above.</p>
             </div>
         `;
         return;
@@ -361,9 +377,35 @@ function setupCategoryFilters() {
             buttons.forEach(b => b.classList.remove('active'));
             button.classList.add('active');
             const category = button.getAttribute('data-category');
-            renderMenu(category);
+            renderMenu(category, currentCustomerSearch);
         });
     });
+}
+
+/**
+ * Setup Live Search Bar for customer menu on index.html and menu.html
+ */
+function setupCustomerMenuSearch() {
+    const searchInput = document.getElementById('customerMenuSearch');
+    const clearBtn = document.getElementById('clearMenuSearchBtn');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value;
+        if (clearBtn) {
+            clearBtn.style.display = query ? 'inline-block' : 'none';
+        }
+        renderMenu(currentCustomerCategory, query);
+    });
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            searchInput.focus();
+            renderMenu(currentCustomerCategory, '');
+        });
+    }
 }
 
 /**
@@ -1178,8 +1220,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check which page we are on and initialize accordingly
     if (document.getElementById('menu-grid')) {
-        renderMenu('All');
+        renderMenu('All', '');
         setupCategoryFilters();
+        setupCustomerMenuSearch();
     }
 
     if (document.getElementById('admin-login-view')) {
