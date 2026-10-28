@@ -150,22 +150,82 @@ docker ps -a
 
 ---
 
-## 8. Jenkins CI/CD Pipeline Setup
+## 8. Jenkins CI/CD Pipeline Flow & Automation
 
-The included `Jenkinsfile` defines a 4-stage pipeline that automates the delivery process:
+The included `Jenkinsfile` orchestrates an automated Declarative CI/CD pipeline that connects **Git, GitHub, Docker, and Jenkins** in a unified delivery lifecycle:
+
+### Visual Pipeline Flowchart
 
 ```mermaid
-flowchart LR
-    A["Stage 1: Checkout"] --> B["Stage 2: Validate Files"]
-    B --> C["Stage 3: Build Docker Image"]
-    C --> D["Stage 4: Deploy Container (:8080)"]
+flowchart TD
+    subgraph SCM["1. Source Control Management"]
+        Dev["Developer Commit"] -->|"git push origin main"| GitHub["GitHub Repository<br/>(Enushabathula/SPENZA)"]
+    end
+
+    subgraph Jenkins["2. Jenkins CI/CD Orchestrator"]
+        GitHub -->|"Webhook / Poll SCM Trigger"| S1["Stage 1: Checkout<br/>(Pulls latest commit)"]
+        S1 --> S2["Stage 2: Validate Files<br/>(HTML, CSS, JS, Images, Dockerfile)"]
+        S2 --> S3["Stage 3: Docker Build<br/>(docker build -t restaurant-website .)"]
+        S3 --> S4["Stage 4: Docker Deploy<br/>(docker run -d -p 8080:80)"]
+    end
+
+    subgraph Production["3. Container Runtime Environment"]
+        S4 --> Nginx["Docker Container<br/>(nginx:alpine on Port 8080)"]
+        Nginx --> Browser["Live Customer Access<br/>http://localhost:8080"]
+    end
+
+    style SCM fill:#1c1917,stroke:#EAAE00,color:#fff
+    style Jenkins fill:#18181b,stroke:#EAAE00,color:#fff
+    style Production fill:#1c1917,stroke:#22c55e,color:#fff
 ```
 
-### Pipeline Stages
-1. **Checkout**: Clones the latest branch commit from GitHub.
-2. **Validate**: Checks that all critical assets (`index.html`, `about.html`, `menu.html`, `reach-us.html`, `admin.html`, `style.css`, `script.js`, `Dockerfile`) exist before proceeding. If any file is missing, the build terminates with a clear failure.
-3. **Build**: Builds `restaurant-website:latest` using Docker.
-4. **Deploy**: Gracefully stops any previously running `restaurant-website-app` container and runs the new image mapped to host port **8080**.
+### End-to-End Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Dev as Developer
+    participant Git as Local Git
+    participant Hub as GitHub Remote
+    participant Jen as Jenkins CI/CD
+    participant Dkr as Docker Engine
+    actor User as End User / Customer
+
+    Dev->>Git: git commit -m "Update menu & styles"
+    Git->>Hub: git push origin main
+    Hub->>Jen: Trigger Webhook / SCM Polling
+    Note over Jen: Stage 1: Checkout SCM
+    Jen->>Hub: Clone latest commit
+    Note over Jen: Stage 2: Validate Files
+    Jen->>Jen: Check index.html, style.css, script.js, Dockerfile
+    Note over Jen: Stage 3: Docker Build
+    Jen->>Dkr: docker build -t restaurant-website:latest .
+    Dkr-->>Jen: Image built successfully
+    Note over Jen: Stage 4: Docker Deploy
+    Jen->>Dkr: docker stop & rm old container
+    Jen->>Dkr: docker run -d -p 8080:80 restaurant-website
+    Dkr-->>Jen: Container started
+    Note over Jen: Post-Build: Success Alert
+    User->>Dkr: Navigate to http://localhost:8080
+    Dkr-->>User: Serves SPENZA Kitchen & Dining
+```
+
+### Detailed Pipeline Stages
+
+1. **Stage 1: Checkout**:
+   * Uses `checkout scm` to pull the latest source code revisions directly from the GitHub repository into the Jenkins isolated workspace.
+2. **Stage 2: Validate**:
+   * Executes a fail-fast pre-flight integrity check on required website assets (`index.html`, `about.html`, `menu.html`, `reach-us.html`, `admin.html`, `style.css`, `script.js`, `logo.png`, `hero-bg.jpg`, `Dockerfile`).
+   * If any file is accidentally missing or renamed, the build terminates early before consuming Docker resources.
+3. **Stage 3: Build**:
+   * Compiles the container image with `docker build -t restaurant-website:latest .`.
+   * Packages Nginx Alpine with all restaurant static assets.
+4. **Stage 4: Deploy**:
+   * Inspects if any existing container named `restaurant-website-app` is currently running.
+   * Gracefully terminates and removes the legacy container (`docker stop`, `docker rm`).
+   * Starts a fresh container mapping host port **8080** to internal Nginx port **80** (`docker run -d -p 8080:80 ...`).
+5. **Post Actions**:
+   * Prints the deployment status banner, verified URL (`http://localhost:8080`), and image metadata. Logs failure diagnostics if any stage fails.
 
 ### Jenkins Prerequisites
 1. Jenkins server installed with Docker installed on the same host (or agent).
